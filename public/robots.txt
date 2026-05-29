@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sergio-villena-portfolio.vercel.app/sitemap.xml
