@@ -17,7 +17,7 @@ const proofPoints = [
 
 const Hero = () => {
     return (
-        <section id="inicio" className="relative min-h-screen pt-32 pb-24 lg:pt-44 lg:pb-36">
+        <section id="inicio" className="relative min-h-screen pt-24 pb-16 lg:pt-32 lg:pb-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                     <motion.div
@@ -26,20 +26,20 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                         className="lg:col-span-7"
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-premium text-[11px] font-black uppercase tracking-[0.18em] mb-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-premium text-[11px] font-black uppercase tracking-[0.18em] mb-6">
                             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                             Full Stack · IA aplicada · GIS · Infraestructura
                         </div>
 
-                        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight leading-[0.9] text-gradient break-words">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-[1.05] text-gradient break-words">
                             Construyo sistemas digitales que automatizan operaciones reales.
                         </h1>
 
-                        <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed font-light">
+                        <p className="text-base sm:text-lg text-slate-300 max-w-2xl mb-8 leading-relaxed font-light">
                             Soy Sergio Villena, Ingeniero Civil en Informática. Desarrollo plataformas full-stack, flujos con IA, sistemas geoespaciales y herramientas de monitoreo para negocios e infraestructura crítica.
                         </p>
 
-                        <div className="flex flex-wrap gap-4 sm:gap-5 mb-10">
+                        <div className="flex flex-wrap gap-4 sm:gap-5 mb-8">
                             <MagneticWrapper>
                                 <a href="#proyectos" className="inline-flex items-center justify-center gap-2 px-6 py-4 sm:px-8 bg-white text-slate-950 font-black rounded-2xl hover:scale-105 transition-transform shadow-2xl text-sm sm:text-base w-full sm:w-auto">
                                     Ver casos reales
@@ -85,7 +85,7 @@ const Hero = () => {
                                 <img
                                     src="/profile/sergio-villena-portrait.webp"
                                     alt="Sergio Villena"
-                                    className="h-[460px] w-full object-cover object-[center_8%]"
+                                    className="h-[350px] sm:h-[400px] w-full object-cover object-[center_8%]"
                                     loading="eager"
                                 />
                             </div>
