@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Skills from '../components/Skills';
+import Projects from '../components/Projects';
+import Experience from '../components/Experience';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+---
+
+<Layout title="Sergio Villena | Full Stack, IA y Sistemas Geoespaciales">
+  <div class="grid-pattern min-h-screen text-slate-200 selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden">
+    <div class="mesh-gradient"></div>
+    
+    <!-- Hydrate immediately since it's the navigation -->
+    <Navbar client:load />
+    
+    <!-- Hydrate immediately for hero interactions/animations -->
+    <Hero client:load />
+    
+    <!-- Lazy hydrate the rest when they enter the viewport -->
+    <Skills client:visible />
+    <Projects client:visible />
+    <Experience client:visible />
+    <Contact client:visible />
+    
+    <!-- Footer might not need hydration if it has no interactive state, but we'll use client:visible to be safe -->
+    <Footer client:visible />
+  </div>
+</Layout>

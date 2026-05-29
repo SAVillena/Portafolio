@@ -1,0 +1,52 @@
+# ── Logs ────────────────────────────────────────────────────────────────────
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── Build output ─────────────────────────────────────────────────────────────
+node_modules
+dist
+dist-ssr
+*.local
+
+# ── Editor directories ───────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# ── Astro ────────────────────────────────────────────────────────────────────
+.astro
+
+# ── Screenshots de desarrollo (no pertenecen al repo) ────────────────────────
+desktop-screenshot.png
+full-mobile-screenshot.png
+mobile-screenshot.png
+tablet-screenshot.png
+*.screenshot.png
+
+# ── Scripts de desarrollo / utilidades ───────────────────────────────────────
+scripts/
+
+# ── Fotos originales de cámara (archivos fuente pesados) ─────────────────────
+public/profile/_DSC3394.JPG
+public/profile/*.JPG
+public/profile/*.jpg
+
+# ── CVs duplicados / con nombre incorrecto ────────────────────────────────────
+public/cv/CV_Sergio_Villena_Ingeniero_Informatica (1).pdf
+
+# ── Variables de entorno ──────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
