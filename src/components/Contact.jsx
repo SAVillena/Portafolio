@@ -42,22 +42,21 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/sergio.villena.vergara@gmail.com", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          Nombre: formData.name,
-          Email: formData.email,
-          Asunto: formData.subject || 'Contacto desde portafolio',
-          Mensaje: formData.message
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
         })
       });
 
       const result = await response.json();
-      if (response.ok && (result.success === "true" || result.success === true)) {
+      if (response.ok && result.success === true) {
         setStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
         setTimeout(() => setStatus('idle'), 5000);
