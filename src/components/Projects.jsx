@@ -149,11 +149,11 @@ const projects = [
 ];
 
 const accentMap = {
-    rose: 'border-rose-500/30 text-rose-300 bg-rose-500/10',
-    amber: 'border-amber-500/30 text-amber-300 bg-amber-500/10',
-    blue: 'border-blue-500/30 text-blue-300 bg-blue-500/10',
-    emerald: 'border-emerald-500/30 text-emerald-300 bg-emerald-500/10',
-    teal: 'border-teal-500/30 text-teal-300 bg-teal-500/10',
+    rose: 'border-rose-500/40 text-rose-300 bg-slate-950/80 backdrop-blur-md',
+    amber: 'border-amber-500/40 text-amber-300 bg-slate-950/80 backdrop-blur-md',
+    blue: 'border-blue-500/40 text-blue-300 bg-slate-950/80 backdrop-blur-md',
+    emerald: 'border-emerald-500/40 text-emerald-300 bg-slate-950/80 backdrop-blur-md',
+    teal: 'border-teal-500/40 text-teal-300 bg-slate-950/80 backdrop-blur-md',
 };
 
 /* ─── ImageFrame ────────────────────────────────────────────────────────────
@@ -179,6 +179,8 @@ const ImageFrame = ({ src, alt, className = '', imageClassName = '' }) => (
             alt={alt}
             className={`relative z-10 h-full w-full object-contain ${imageClassName}`}
         />
+        {/* Viñeta/Sombra interna para suavizar bordes duros de capturas claras */}
+        <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_24px_rgba(2,6,23,0.85)] sm:shadow-[inset_0_0_36px_rgba(2,6,23,0.95)] opacity-90" />
     </div>
 );
 
