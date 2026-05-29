@@ -9,10 +9,10 @@ const MagneticWrapper = ({ children }) => {
 };
 
 const proofPoints = [
-    { value: '<5s', label: 'respuesta IA 24/7' },
-    { value: '32', label: 'landings SEO local' },
-    { value: '~400', label: 'VMs monitoreadas' },
-    { value: '517TB', label: 'storage auditado' },
+    { value: 'Full Stack', label: 'Desarrollo Web' },
+    { value: 'IA Aplicada', label: 'Agentes y Flujos' },
+    { value: 'GIS / Mapas', label: 'Datos Espaciales' },
+    { value: 'DevOps / Cloud', label: 'Infraestructura' },
 ];
 
 const Hero = () => {
@@ -93,9 +93,9 @@ const Hero = () => {
                             <div className="rounded-2xl border border-white/10 bg-slate-950/85 p-4 backdrop-blur-xl shadow-2xl">
                                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                                     {proofPoints.map((item) => (
-                                        <div key={item.label} className="rounded-xl bg-white/[0.04] p-3">
-                                            <p className="text-xl font-black text-white">{item.value}</p>
-                                            <p className="mt-1 text-[10px] font-bold uppercase leading-snug tracking-wider text-slate-500">{item.label}</p>
+                                        <div key={item.value} className="rounded-xl bg-white/[0.04] p-3 text-center flex flex-col justify-center min-h-[72px]">
+                                            <p className="text-[13px] sm:text-sm font-black text-white leading-tight">{item.value}</p>
+                                            <p className="mt-1 text-[9px] font-bold uppercase leading-snug tracking-wider text-slate-500">{item.label}</p>
                                         </div>
                                     ))}
                                 </div>

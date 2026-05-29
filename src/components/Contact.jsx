@@ -27,7 +27,6 @@ const contactLinks = [
     icon: MapPin,
   },
 ];
-
 const Contact = () => {
   const [formData, setFormData] = React.useState({
     name: '',
@@ -36,11 +35,40 @@ const Contact = () => {
     message: '',
   });
 
-  const mailtoHref = `mailto:sergio.villena.vergara@gmail.com?subject=${encodeURIComponent(formData.subject || 'Contacto desde portafolio')}&body=${encodeURIComponent(`Hola Sergio,\n\n${formData.message}\n\nNombre: ${formData.name}\nEmail: ${formData.email}`)}`;
+  const [status, setStatus] = React.useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    window.location.href = mailtoHref;
+    setStatus('sending');
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/sergio.villena.vergara@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          Nombre: formData.name,
+          Email: formData.email,
+          Asunto: formData.subject || 'Contacto desde portafolio',
+          Mensaje: formData.message
+        })
+      });
+
+      const result = await response.json();
+      if (response.ok && (result.success === "true" || result.success === true)) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 4000);
+      }
+    } catch (error) {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   const handleChange = (event) => {
@@ -163,10 +191,35 @@ const Contact = () => {
                   placeholder="Cuéntame qué necesitas construir, automatizar o mejorar..."
                 />
               </label>
-              <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-5 py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-blue-600/20 transition hover:bg-blue-400">
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl transition-all duration-300 ${
+                  status === 'sending'
+                    ? 'bg-blue-600/50 cursor-not-allowed shadow-none'
+                    : status === 'success'
+                    ? 'bg-emerald-500 hover:bg-emerald-400 shadow-emerald-600/20'
+                    : status === 'error'
+                    ? 'bg-rose-500 hover:bg-rose-400 shadow-rose-600/20'
+                    : 'bg-blue-500 hover:bg-blue-400 shadow-blue-600/20'
+                }`}
+              >
                 <Send className="h-4 w-4" />
-                Enviar por email
+                {status === 'idle' && 'Enviar mensaje'}
+                {status === 'sending' && 'Enviando...'}
+                {status === 'success' && '¡Mensaje Enviado!'}
+                {status === 'error' && 'Error al enviar'}
               </button>
+              {status === 'success' && (
+                <p className="mt-3 text-center text-xs font-bold text-emerald-400 animate-pulse">
+                  ¡Mensaje enviado con éxito directamente a mi correo! Te responderé pronto.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="mt-3 text-center text-xs font-bold text-rose-400">
+                  Hubo un error al enviar. Por favor, reintenta o escríbeme directamente a mi email.
+                </p>
+              )}
             </form>
           </motion.div>
         </div>
