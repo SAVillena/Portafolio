@@ -213,18 +213,20 @@ const accentMap = {
 /* ─── ImageFrame ────────────────────────────────────────────────────────────
    Contenedor de imagen con fondo blur decorativo.
 ─────────────────────────────────────────────────────────────────────────── */
-const ImageFrame = ({ src, alt, className = '', imageClassName = '' }) => (
+const ImageFrame = ({ src, alt, className = '', imageClassName = '', loading = 'eager' }) => (
     <div className={`relative overflow-hidden bg-slate-950 ${className}`}>
         <img
             src={src}
             alt=""
             aria-hidden="true"
+            loading={loading}
             className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl pointer-events-none"
         />
         <div className="absolute inset-0 bg-slate-950/45 pointer-events-none" />
         <img
             src={src}
             alt={alt}
+            loading={loading}
             className={`relative z-10 h-full w-full object-contain ${imageClassName}`}
         />
         <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_24px_rgba(2,6,23,0.85)] sm:shadow-[inset_0_0_36px_rgba(2,6,23,0.95)] opacity-90" />
@@ -711,6 +713,7 @@ const ProjectCard = ({ project, onOpen }) => {
                         alt={project.title}
                         className={project.featured ? 'h-56 sm:h-72 lg:h-full lg:min-h-[380px]' : 'h-52 sm:h-64'}
                         imageClassName="transition duration-500 group-hover:scale-[1.03]"
+                        loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
                     <div className={`absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-[10px] font-black uppercase tracking-widest ${accentMap[project.accent]}`}>
