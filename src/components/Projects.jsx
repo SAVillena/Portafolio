@@ -1,16 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
     Activity,
+    ArrowLeft,
+    ArrowRight,
     ArrowUpRight,
     Bot,
     Github,
     Lock,
     MapPin,
+    Maximize2,
     Server,
     Sparkles,
     X,
 } from 'lucide-react';
+
+/* ─── Slide/Fade Animation Variants ──────────────────────────────────────── */
+const slideVariants = {
+    enter: (direction) => ({
+        x: direction > 0 ? 80 : -80,
+        opacity: 0,
+        scale: 0.96,
+    }),
+    center: {
+        x: 0,
+        opacity: 1,
+        scale: 1,
+    },
+    exit: (direction) => ({
+        x: direction > 0 ? -80 : 80,
+        opacity: 0,
+        scale: 0.96,
+    }),
+};
+
+const slideTransition = {
+    x: { type: 'spring', stiffness: 300, damping: 30 },
+    opacity: { duration: 0.25 },
+    scale: { duration: 0.25 },
+};
+
+/* ─── usePreloadImages ──────────────────────────────────────────────────────
+   Precarga imágenes adyacentes (prev/next) en el caché del navegador para
+   que las transiciones slide/fade no tengan parpadeos de carga.
+─────────────────────────────────────────────────────────────────────────── */
+const usePreloadImages = (images, currentIndex) => {
+    useEffect(() => {
+        const preload = (src) => {
+            if (!src) return;
+            const img = new Image();
+            img.src = src;
+        };
+
+        const len = images.length;
+        if (len <= 1) return;
+
+        // Precargar siguiente e imagen anterior (con wrap-around)
+        preload(images[(currentIndex + 1) % len].src);
+        preload(images[(currentIndex - 1 + len) % len].src);
+
+        // Si hay 3+ imágenes, también precargar 2 pasos adelante
+        if (len >= 3) {
+            preload(images[(currentIndex + 2) % len].src);
+        }
+    }, [images, currentIndex]);
+};
 
 const projects = [
     {
@@ -158,45 +212,225 @@ const accentMap = {
 
 /* ─── ImageFrame ────────────────────────────────────────────────────────────
    Contenedor de imagen con fondo blur decorativo.
-   IMPORTANTE: el contenedor usa overflow-hidden para que la imagen blur
-   no se filtre al exterior. El z-index relativo garantiza que la imagen
-   principal esté encima de la capa de desenfoque.
 ─────────────────────────────────────────────────────────────────────────── */
 const ImageFrame = ({ src, alt, className = '', imageClassName = '' }) => (
     <div className={`relative overflow-hidden bg-slate-950 ${className}`}>
-        {/* Fondo decorativo borroso – no puede sobresalir del overflow-hidden */}
         <img
             src={src}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl pointer-events-none"
         />
-        {/* Capa oscura */}
         <div className="absolute inset-0 bg-slate-950/45 pointer-events-none" />
-        {/* Imagen real – z-10 garantiza que esté por encima de las capas decorativas */}
         <img
             src={src}
             alt={alt}
             className={`relative z-10 h-full w-full object-contain ${imageClassName}`}
         />
-        {/* Viñeta/Sombra interna para suavizar bordes duros de capturas claras */}
         <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_24px_rgba(2,6,23,0.85)] sm:shadow-[inset_0_0_36px_rgba(2,6,23,0.95)] opacity-90" />
     </div>
 );
 
-/* ─── ProjectModal ──────────────────────────────────────────────────────────
-   Modal de detalle de proyecto.
+/* ─── FullscreenLightbox ────────────────────────────────────────────────────
+   Visor de pantalla completa con navegación, zoom y soporte táctil.
+   - Navegación con flechas (click o teclado)
+   - Swipe en mobile (touch events con umbral)
+   - Zoom con doble click
+   - Cierra con Escape o click en overlay
+─────────────────────────────────────────────────────────────────────────── */
+const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
+    usePreloadImages(images, currentIndex);
+    const [zoomed, setZoomed] = useState(false);
+    const [direction, setDirection] = useState(1);
+    const prevIndexRef = useRef(currentIndex);
+    const touchStartRef = useRef({ x: 0, y: 0 });
+    const touchDeltaRef = useRef(0);
 
-   Correcciones mobile:
-   • En pantallas pequeñas el modal usa una sola columna con scroll vertical
-     completo (overflow-y-auto en el contenedor raíz del panel).
-   • En lg+ cambia a dos columnas, cada columna con su propio scroll.
-   • El label de la imagen activa está encima de la imagen (z-20) para que
-     nunca quede tapado por el ImageFrame.
+    /* Reset zoom y rastrear dirección al cambiar de imagen */
+    useEffect(() => {
+        setDirection(currentIndex > prevIndexRef.current ? 1 : -1);
+        prevIndexRef.current = currentIndex;
+        setZoomed(false);
+    }, [currentIndex]);
+
+    useEffect(() => {
+        const handleKey = (e) => {
+            if (e.key === 'Escape') onClose();
+            if (e.key === 'ArrowLeft') onNavigate(-1);
+            if (e.key === 'ArrowRight') onNavigate(1);
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [onClose, onNavigate]);
+
+    /* Bloquear scroll del body */
+    useEffect(() => {
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = prev; };
+    }, []);
+
+    const handleDoubleClick = () => setZoomed((z) => !z);
+
+    const handleTouchStart = (e) => {
+        if (zoomed) return;
+        touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        touchDeltaRef.current = 0;
+    };
+
+    const handleTouchMove = (e) => {
+        if (zoomed) return;
+        touchDeltaRef.current = e.touches[0].clientX - touchStartRef.current.x;
+    };
+
+    const handleTouchEnd = () => {
+        if (zoomed) return;
+        if (Math.abs(touchDeltaRef.current) > 60) {
+            onNavigate(touchDeltaRef.current > 0 ? -1 : 1);
+        }
+        touchDeltaRef.current = 0;
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/95 backdrop-blur-xl"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Visor de imagen en pantalla completa"
+            onClick={onClose}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
+            {/* Cerrar */}
+            <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); onClose(); }}
+                className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/20"
+                aria-label="Cerrar visor"
+            >
+                <X className="h-5 w-5" />
+            </button>
+
+            {/* Contador */}
+            <div className="absolute left-4 top-4 z-10 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
+                {currentIndex + 1} / {images.length}
+            </div>
+
+            {/* Flecha izquierda */}
+            {images.length > 1 && (
+                <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onNavigate(-1); }}
+                    className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/25 active:scale-95 sm:left-6 sm:p-4"
+                    aria-label="Imagen anterior"
+                >
+                    <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+            )}
+
+            {/* Flecha derecha */}
+            {images.length > 1 && (
+                <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onNavigate(1); }}
+                    className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/25 active:scale-95 sm:right-6 sm:p-4"
+                    aria-label="Imagen siguiente"
+                >
+                    <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+            )}
+
+            {/* Imagen con slide/fade */}
+            <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                    key={images[currentIndex].src}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={slideTransition}
+                    className="relative z-[5] flex items-center justify-center"
+                    onClick={(e) => { e.stopPropagation(); handleDoubleClick(); }}
+                >
+                    <motion.img
+                        src={images[currentIndex].src}
+                        alt={images[currentIndex].label}
+                        animate={{ scale: zoomed ? 2 : 1 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                        className={`max-h-[85vh] max-w-[92vw] select-none object-contain sm:max-h-[88vh] sm:max-w-[90vw] ${zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+                        draggable={false}
+                    />
+                </motion.div>
+            </AnimatePresence>
+
+            {/* Label */}
+            <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white backdrop-blur">
+                {images[currentIndex].label}
+            </div>
+        </motion.div>
+    );
+};
+
+/* ─── ProjectModal ──────────────────────────────────────────────────────────
+   Modal de detalle de proyecto con galería, flechas y lightbox.
 ─────────────────────────────────────────────────────────────────────────── */
 const ProjectModal = ({ project, onClose }) => {
-    const [activeImage, setActiveImage] = useState(project.images[0]);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
 
+    const activeImage = project.images[activeIndex];
+
+    /* Precargar imágenes del proyecto al abrir el modal */
+    usePreloadImages(project.images, activeIndex);
+
+    /* Navegación de imágenes con dirección */
+    const navigateImage = useCallback(
+        (delta) => {
+            setDirection(delta);
+            setActiveIndex((prev) => {
+                const next = prev + delta;
+                if (next < 0) return project.images.length - 1;
+                if (next >= project.images.length) return 0;
+                return next;
+            });
+        },
+        [project.images.length],
+    );
+
+    /* Navegación del lightbox */
+    const navigateLightbox = useCallback(
+        (delta) => {
+            setLightboxIndex((prev) => {
+                const next = prev + delta;
+                if (next < 0) return project.images.length - 1;
+                if (next >= project.images.length) return 0;
+                return next;
+            });
+        },
+        [project.images.length],
+    );
+
+    /* Teclado para el modal */
+    useEffect(() => {
+        if (lightboxOpen) return;
+        const handleKey = (e) => {
+            if (e.key === 'Escape') onClose();
+            if (e.key === 'ArrowLeft') navigateImage(-1);
+            if (e.key === 'ArrowRight') navigateImage(1);
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [onClose, navigateImage, lightboxOpen]);
+
+    /* Bloquear scroll del body */
     useEffect(() => {
         const originalOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
@@ -204,6 +438,11 @@ const ProjectModal = ({ project, onClose }) => {
             document.body.style.overflow = originalOverflow;
         };
     }, []);
+
+    const openLightbox = (index) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+    };
 
     const Icon = project.icon;
 
@@ -232,20 +471,76 @@ const ProjectModal = ({ project, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* ── Columna izquierda: galería de imágenes ── */}
-                {/* En mobile: flujo continuo; en lg: columna scrolleable independiente. */}
                 <div className="flex flex-col lg:overflow-y-auto modal-scroll border-b border-white/10 lg:border-b-0 lg:border-r lg:max-h-[92vh]">
-                    {/* Imagen principal */}
-                    <div className="relative flex-shrink-0">
-                        <ImageFrame
-                            src={activeImage.src}
-                            alt={activeImage.label}
-                            className="h-[38vh] sm:h-[45vh] lg:h-[52vh] lg:min-h-[340px] lg:max-h-[520px] w-full"
-                        />
-                        {/* Label sobre la imagen – z-20 para superar el z-10 de ImageFrame */}
+                    {/* Imagen principal con flechas y slide animation */}
+                    <div className="relative flex-shrink-0 group/gallery">
+                        <div className="h-[38vh] sm:h-[45vh] lg:h-[52vh] lg:min-h-[340px] lg:max-h-[520px] w-full relative overflow-hidden bg-slate-950">
+                            <AnimatePresence mode="wait" custom={direction}>
+                                <motion.div
+                                    key={activeImage.src}
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                    transition={slideTransition}
+                                    className="absolute inset-0"
+                                >
+                                    <ImageFrame
+                                        src={activeImage.src}
+                                        alt={activeImage.label}
+                                        className="h-full w-full cursor-pointer"
+                                        imageClassName="cursor-pointer"
+                                    />
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Label sobre la imagen */}
                         <div className="absolute left-4 top-4 z-20 rounded-lg bg-slate-950/80 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur">
                             {activeImage.label}
                         </div>
-                        {/* Botón cerrar visible en mobile arriba a la derecha */}
+
+                        {/* Indicador de imagen actual */}
+                        <div className="absolute bottom-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-slate-950/70 px-2.5 py-1 text-[10px] font-bold text-white/70 backdrop-blur">
+                            {activeIndex + 1} / {project.images.length}
+                        </div>
+
+                        {/* Botón expandir / fullscreen */}
+                        <button
+                            type="button"
+                            onClick={() => openLightbox(activeIndex)}
+                            className="absolute right-14 top-4 z-20 rounded-lg bg-slate-950/70 p-2 text-slate-300 backdrop-blur transition hover:bg-slate-950/90 hover:text-white lg:hidden"
+                            aria-label="Ver en pantalla completa"
+                        >
+                            <Maximize2 className="h-5 w-5" />
+                        </button>
+
+                        {/* Flecha izquierda */}
+                        {project.images.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => navigateImage(-1)}
+                                className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-slate-950/60 p-2 text-white/80 backdrop-blur transition opacity-0 group-hover/gallery:opacity-100 hover:bg-slate-950/80 hover:text-white active:scale-95 sm:left-3 sm:p-2.5"
+                                aria-label="Imagen anterior"
+                            >
+                                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                            </button>
+                        )}
+
+                        {/* Flecha derecha */}
+                        {project.images.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => navigateImage(1)}
+                                className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-slate-950/60 p-2 text-white/80 backdrop-blur transition opacity-0 group-hover/gallery:opacity-100 hover:bg-slate-950/80 hover:text-white active:scale-95 sm:right-4 sm:p-2.5 lg:right-4"
+                                aria-label="Imagen siguiente"
+                            >
+                                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                            </button>
+                        )}
+
+                        {/* Botón cerrar visible en mobile */}
                         <button
                             type="button"
                             onClick={onClose}
@@ -254,25 +549,32 @@ const ProjectModal = ({ project, onClose }) => {
                         >
                             <X className="h-5 w-5" />
                         </button>
+
+                        {/* Click en imagen abre lightbox (solo desktop) */}
+                        <button
+                            type="button"
+                            onClick={() => openLightbox(activeIndex)}
+                            className="absolute inset-0 z-[14] hidden cursor-pointer bg-transparent lg:block"
+                            aria-label="Abrir en pantalla completa"
+                        />
                     </div>
 
                     {/* Thumbnails – grid adaptativo según cantidad de imágenes */}
                     <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-shrink-0">
-                        {project.images.map((image) => (
+                        {project.images.map((image, idx) => (
                             <button
                                 key={image.src}
                                 type="button"
-                                onClick={() => setActiveImage(image)}
+                                onClick={() => { setDirection(idx > activeIndex ? 1 : -1); setActiveIndex(idx); }}
                                 aria-label={`Ver captura: ${image.label}`}
-                                aria-pressed={activeImage.src === image.src}
+                                aria-pressed={activeIndex === idx}
                                 className={`overflow-hidden rounded-lg border text-left transition ${
-                                    activeImage.src === image.src
-                                        ? 'border-white/60'
+                                    activeIndex === idx
+                                        ? 'border-white/60 ring-1 ring-white/20'
                                         : 'border-white/10 hover:border-white/30'
                                 }`}
                             >
                                 <ImageFrame src={image.src} alt={image.label} className="aspect-video w-full" />
-                                {/* Label del thumbnail – fuera del ImageFrame, nunca tapado */}
                                 <span className="block truncate px-2 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400" aria-hidden="true">
                                     {image.label}
                                 </span>
@@ -282,8 +584,6 @@ const ProjectModal = ({ project, onClose }) => {
                 </div>
 
                 {/* ── Columna derecha: detalle del proyecto ── */}
-                {/* lg:overflow-y-auto para scroll independiente en lg.
-                    En mobile ya está dentro del flujo scrolleable del panel principal. */}
                 <div className="lg:overflow-y-auto modal-scroll bg-slate-950 p-5 sm:p-7">
                     <div className="mb-6 flex items-start justify-between gap-4">
                         <div>
@@ -374,20 +674,24 @@ const ProjectModal = ({ project, onClose }) => {
                     </div>
                 </div>
             </motion.div>
+
+            {/* Fullscreen Lightbox */}
+            <AnimatePresence>
+                {lightboxOpen && (
+                    <FullscreenLightbox
+                        images={project.images}
+                        currentIndex={lightboxIndex}
+                        onClose={() => setLightboxOpen(false)}
+                        onNavigate={navigateLightbox}
+                    />
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
 
 /* ─── ProjectCard ───────────────────────────────────────────────────────────
    Tarjeta de proyecto en la lista.
-
-   Correcciones:
-   • El div exterior de la tarjeta es `flex flex-col` en mobile para que
-     la imagen quede ARRIBA y el texto ABAJO, sin superposición.
-   • En featured + lg: se activa el grid de dos columnas.
-   • El badge de tipo (Freelance / Empresa…) tiene z-10 explícito para
-     garantizar que esté siempre visible sobre la imagen.
-   • El gradiente que oscurece la imagen solo aplica cuando corresponde.
 ─────────────────────────────────────────────────────────────────────────── */
 const ProjectCard = ({ project, onOpen }) => {
     const Icon = project.icon;
@@ -399,7 +703,6 @@ const ProjectCard = ({ project, onOpen }) => {
                 project.featured ? 'lg:col-span-2' : ''
             }`}
         >
-            {/* Layout: columna en mobile, dos columnas en featured+lg */}
             <div className={`flex flex-col ${project.featured ? 'lg:grid lg:grid-cols-[1.1fr_0.9fr]' : ''}`}>
                 {/* ── Bloque imagen ── */}
                 <div className="relative overflow-hidden bg-slate-900 flex-shrink-0">
@@ -409,16 +712,14 @@ const ProjectCard = ({ project, onOpen }) => {
                         className={project.featured ? 'h-56 sm:h-72 lg:h-full lg:min-h-[380px]' : 'h-52 sm:h-64'}
                         imageClassName="transition duration-500 group-hover:scale-[1.03]"
                     />
-                    {/* Gradiente sutil en la base de la imagen – no superpone texto */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-                    {/* Badge de tipo – z-10 para estar siempre encima del ImageFrame */}
                     <div className={`absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-[10px] font-black uppercase tracking-widest ${accentMap[project.accent]}`}>
                         <Icon className="h-3.5 w-3.5" />
                         {project.type}
                     </div>
                 </div>
 
-                {/* ── Bloque texto ── separado de la imagen, nunca superpuesto */}
+                {/* ── Bloque texto ── */}
                 <div className="flex flex-col p-5 sm:p-7 bg-slate-900/35">
                     <div className="mb-5 flex items-start justify-between gap-4">
                         <div>
