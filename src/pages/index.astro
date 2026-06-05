@@ -13,11 +13,11 @@ import Footer from '../components/Footer';
   <main class="grid-pattern min-h-screen text-slate-200 selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden">
     <div class="mesh-gradient"></div>
     
-    <!-- Hydrate immediately since it's the navigation -->
-    <Navbar client:load />
+    <!-- Hydrate on idle: UI renders instantly via SSR, interactivity loads automatically in the background -->
+    <Navbar client:idle />
     
-    <!-- Hydrate immediately for hero interactions/animations -->
-    <Hero client:load />
+    <!-- Hero now uses CSS animations, so JS (gsap for magnetic effect) can load on idle -->
+    <Hero client:idle />
     
     <!-- client:visible: hydrate only when the component enters the viewport (best for unused JS reduction) -->
     <Skills client:visible />

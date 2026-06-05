@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ArrowDown, Download, Github, Linkedin, Mail, MapPin } from '../icons';
 import useMagnetic from '../hooks/useMagnetic';
 
@@ -20,11 +19,8 @@ const Hero = () => {
         <section id="inicio" className="relative min-h-screen pt-28 pb-12 lg:pt-36 lg:pb-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="lg:col-span-7"
+                    <div
+                        className="lg:col-span-7 opacity-0 animate-fade-in-up"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-premium text-[11px] font-black uppercase tracking-[0.18em] mb-6">
                             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -72,13 +68,10 @@ const Hero = () => {
                                 Chile
                             </span>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.94 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="lg:col-span-5"
+                    <div
+                        className="lg:col-span-5 opacity-0 animate-fade-in-scale"
                     >
                         <div className="flex flex-col gap-4">
                             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/50 shadow-2xl shadow-blue-950/40">
@@ -101,7 +94,7 @@ const Hero = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
 
