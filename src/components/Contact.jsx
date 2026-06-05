@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
+import { Download, Github, Linkedin, Mail, MapPin, Send } from '../icons';
 
 const contactLinks = [
   {

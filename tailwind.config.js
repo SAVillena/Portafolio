@@ -12,7 +12,7 @@ export default {
                 dark: "#0f172a", // Slate 900
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
+                sans: ['Inter Variable', 'sans-serif'],
             },
         },
     },

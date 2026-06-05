@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from '../icons';
 
 const Footer = () => {
     return (
@@ -8,7 +8,7 @@ const Footer = () => {
                 <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
                     <div>
                         <h2 className="text-2xl font-black text-white">Sergio Villena</h2>
-                        <p className="mt-2 text-sm text-slate-500">Ingeniero Civil en Informática · Chile</p>
+                        <p className="mt-2 text-sm text-slate-400">Ingeniero Civil en Informática · Chile</p>
                     </div>
 
                     <div className="flex gap-3">
@@ -24,7 +24,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 text-xs font-semibold uppercase tracking-widest text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 text-xs font-semibold uppercase tracking-widest text-slate-400 sm:flex-row sm:items-center sm:justify-between">
                     <span>Portafolio · 2026</span>
                     <span>Full-stack · IA aplicada · GIS · Infraestructura</span>
                 </div>

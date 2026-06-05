@@ -50,3 +50,5 @@ public/cv/CV_Sergio_Villena_Ingeniero_Informatica (1).pdf
 .env
 .env.*
 !.env.example
+
+.vercel

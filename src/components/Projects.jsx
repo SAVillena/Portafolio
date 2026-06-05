@@ -13,7 +13,7 @@ import {
     Server,
     Sparkles,
     X,
-} from 'lucide-react';
+} from '../icons';
 
 /* ─── Slide/Fade Animation Variants ──────────────────────────────────────── */
 const slideVariants = {

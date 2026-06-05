@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BriefcaseBusiness, GraduationCap, ServerCog, Sparkles } from 'lucide-react';
+import { BriefcaseBusiness, GraduationCap, ServerCog, Sparkles } from '../icons';
 
 const timeline = [
   {

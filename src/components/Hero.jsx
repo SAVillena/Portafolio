@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowDown, Download, Github, Linkedin, Mail, MapPin } from '../icons';
 import useMagnetic from '../hooks/useMagnetic';
 
 const MagneticWrapper = ({ children }) => {
@@ -17,7 +17,7 @@ const proofPoints = [
 
 const Hero = () => {
     return (
-        <section id="inicio" className="relative min-h-screen pt-28 pb-20 lg:pt-36 lg:pb-28">
+        <section id="inicio" className="relative min-h-screen pt-28 pb-12 lg:pt-36 lg:pb-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                     <motion.div
@@ -103,6 +103,12 @@ const Hero = () => {
                         </div>
                     </motion.div>
                 </div>
+            </div>
+
+            {/* Separator line */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px">
+                <div className="w-full h-full bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+                <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-1.5 h-1.5 rounded-full bg-blue-500/50" />
             </div>
         </section>
     );

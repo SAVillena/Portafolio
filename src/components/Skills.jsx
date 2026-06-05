@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Globe, Server, BarChart3, Bot, Wrench } from 'lucide-react';
+import { Code2, Globe, Server, BarChart3, Bot, Wrench } from '../icons';
 
 const Skills = () => {
     const containerVariants = {
@@ -66,7 +66,7 @@ const Skills = () => {
     };
 
     return (
-        <section id="habilidades" className="py-32 relative">
+        <section id="habilidades" className="pt-16 pb-32 lg:pt-20 lg:pb-32 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -76,9 +76,9 @@ const Skills = () => {
                     className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-6"
                 >
                     <div className="max-w-2xl">
-                        <h3 className="text-3xl sm:text-5xl font-black text-white mb-6 tracking-tight leading-none italic uppercase">
+                        <h2 className="text-3xl sm:text-5xl font-black text-white mb-6 tracking-tight leading-none italic uppercase">
                             Habilidades <br /><span className="text-blue-500">Técnicas</span>
-                        </h3>
+                        </h2>
                         <p className="text-slate-400 text-lg font-light">Dominio del ciclo completo de desarrollo: producto, automatización, datos geoespaciales e infraestructura.</p>
                     </div>
                     <div className="flex gap-4">
@@ -119,7 +119,7 @@ const Skills = () => {
                                 <div className={`w-14 h-14 ${c.bg} rounded-2xl flex items-center justify-center ${c.icon} mb-7`}>
                                     {group.icon}
                                 </div>
-                                <h4 className="text-white font-black text-base mb-5 uppercase tracking-wider">{group.title}</h4>
+                                <h3 className="text-white font-black text-base mb-5 uppercase tracking-wider">{group.title}</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {group.skills.map((skill) => (
                                         <span
