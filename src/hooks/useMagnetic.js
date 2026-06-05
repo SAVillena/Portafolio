@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 
 export default function useMagnetic() {
     const magnetic = useRef(null);
@@ -8,30 +7,35 @@ export default function useMagnetic() {
         const element = magnetic.current;
         if (!element) return;
 
-        const xTo = gsap.quickTo(element, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
-        const yTo = gsap.quickTo(element, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
+        let xTo, yTo;
+        let mouseMove, mouseLeave;
 
-        const mouseMove = (e) => {
-            const { clientX, clientY } = e;
-            const { height, width, left, top } = element.getBoundingClientRect();
-            const x = clientX - (left + width / 2);
-            const y = clientY - (top + height / 2);
-            // Apply magnetic effect with a factor (e.g., 0.35)
-            xTo(x * 0.35);
-            yTo(y * 0.35);
-        };
+        import('gsap').then(({ gsap }) => {
+            xTo = gsap.quickTo(element, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
+            yTo = gsap.quickTo(element, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
 
-        const mouseLeave = () => {
-            xTo(0);
-            yTo(0);
-        };
+            mouseMove = (e) => {
+                const { clientX, clientY } = e;
+                const { height, width, left, top } = element.getBoundingClientRect();
+                const x = clientX - (left + width / 2);
+                const y = clientY - (top + height / 2);
+                // Apply magnetic effect with a factor (e.g., 0.35)
+                xTo(x * 0.35);
+                yTo(y * 0.35);
+            };
 
-        element.addEventListener("mousemove", mouseMove);
-        element.addEventListener("mouseleave", mouseLeave);
+            mouseLeave = () => {
+                xTo(0);
+                yTo(0);
+            };
+
+            element.addEventListener("mousemove", mouseMove);
+            element.addEventListener("mouseleave", mouseLeave);
+        });
 
         return () => {
-            element.removeEventListener("mousemove", mouseMove);
-            element.removeEventListener("mouseleave", mouseLeave);
+            if (mouseMove) element.removeEventListener("mousemove", mouseMove);
+            if (mouseLeave) element.removeEventListener("mouseleave", mouseLeave);
         };
     }, []);
 

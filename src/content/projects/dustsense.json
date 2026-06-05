@@ -1,0 +1,26 @@
+{
+  "order": 4,
+  "id": "dustsense",
+  "title": "DustSense",
+  "subtitle": "Monitoreo ambiental geoespacial para minería",
+  "type": "Empresa · INNTECH",
+  "status": "Privado / producción interna",
+  "role": "Ingeniero de Software y Encargado de TI",
+  "icon": "Activity",
+  "accent": "emerald",
+  "cover": "/projects/dustsense/dustsense-card.webp",
+  "images": [
+    { "src": "/projects/dustsense/dustsense-alerts.webp", "label": "Panel de alertas" },
+    { "src": "/projects/dustsense/dustsense-monitoring-map.webp", "label": "Mapa geoespacial" },
+    { "src": "/projects/dustsense/dustsense-charts.webp", "label": "Gráficos de series temporales" }
+  ],
+  "problem": "La faena necesitaba centralizar telemetría ambiental para medir, mapear y monitorear concentraciones de polvo PM2.5 y PM10 en tiempo real.",
+  "solution": "Arquitectura PERN con PostGIS para capturar flujos de sensores, espacializar datos, visualizar métricas críticas y activar alertas tempranas.",
+  "metrics": [
+    ["tiempo real", "telemetría ambiental"],
+    ["PM2.5 / PM10", "umbrales críticos"],
+    ["PostGIS", "datos geoespaciales"]
+  ],
+  "stack": ["PostgreSQL", "Express", "React", "Node.js", "PostGIS", "Datos georreferenciados"],
+  "links": [{ "label": "Uso privado", "icon": "Lock" }]
+}

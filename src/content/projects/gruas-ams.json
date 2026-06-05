@@ -1,0 +1,29 @@
+{
+  "order": 1,
+  "id": "gruas-ams",
+  "title": "Grúas AMS",
+  "subtitle": "Ecosistema de automatización logística e inteligencia territorial",
+  "type": "Freelance",
+  "status": "Live",
+  "role": "Ingeniero de Software e IA / Diseñador e implementador del ecosistema full stack",
+  "icon": "Bot",
+  "accent": "rose",
+  "featured": true,
+  "cover": "/projects/gruas-ams/gruas-ams-card.webp",
+  "images": [
+    { "src": "/projects/gruas-ams/gruas-ams-hero.webp", "label": "Landing principal" },
+    { "src": "/projects/gruas-ams/gruas-ams-automation-flow.webp", "label": "Flujo n8n anonimizado" },
+    { "src": "/projects/gruas-ams/gruas-ams-home-mobile.webp", "label": "Hero móvil" },
+    { "src": "/projects/gruas-ams/gruas-ams-coverage-mobile.webp", "label": "Cobertura territorial" }
+  ],
+  "problem": "Fuga de ventas nocturnas por atención manual lenta en WhatsApp, cálculo tarifario complejo y bajo rendimiento SEO móvil en búsquedas de emergencia por comuna.",
+  "solution": "Arquitectura self-hosted con n8n, Chatwoot, Evolution API, agentes IA, Google Maps y landing pages programáticas para respuesta, cotización y despacho 24/7.",
+  "metrics": [
+    ["<5s", "respuesta automática"],
+    ["40%", "menos carga manual"],
+    ["13.9s → <1.5s", "mejora LCP"],
+    ["32", "landings por comuna"]
+  ],
+  "stack": ["n8n", "OpenAI API", "Gemini API", "Chatwoot", "Evolution API", "Google Maps API", "Next.js 15", "Docker", "Google Sheets API"],
+  "links": []
+}

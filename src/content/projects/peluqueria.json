@@ -1,0 +1,27 @@
+{
+  "order": 2,
+  "id": "peluqueria",
+  "title": "Sistema de Reservas Premium",
+  "subtitle": "Agenda digital, catálogo y panel autogestionable para peluquería",
+  "type": "Freelance",
+  "status": "Demo / próxima puesta en marcha",
+  "role": "Desarrollador full-stack: arquitectura, diseño UI/UX y desarrollo",
+  "icon": "Sparkles",
+  "accent": "amber",
+  "cover": "/projects/peluqueria/peluqueria-card.webp",
+  "images": [
+    { "src": "/projects/peluqueria/peluqueria-hero.webp", "label": "Sitio público" },
+    { "src": "/projects/peluqueria/peluqueria-booking.webp", "label": "Reserva online" },
+    { "src": "/projects/peluqueria/peluqueria-confirmation.webp", "label": "Confirmación y WhatsApp" },
+    { "src": "/projects/peluqueria/peluqueria-dashboard.webp", "label": "Panel administrativo" }
+  ],
+  "problem": "La coordinación manual generaba cruces de horarios, exceso de mensajes y una experiencia poco clara para mostrar servicios, precios y disponibilidad.",
+  "solution": "Plataforma PERN con reserva online, validación de disponibilidad, confirmación de hora, catálogo administrable e imágenes gestionadas en Cloudinary.",
+  "metrics": [
+    ["100%", "agendamiento online"],
+    ["0%", "cruces de horario"],
+    ["inmediato", "edición de precios"]
+  ],
+  "stack": ["React 19", "Vite", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "Prisma ORM", "Cloudinary", "JWT", "Bcrypt"],
+  "links": []
+}

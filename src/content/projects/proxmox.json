@@ -1,0 +1,28 @@
+{
+  "order": 5,
+  "id": "proxmox",
+  "title": "Inventario Automatizado Proxmox",
+  "subtitle": "Monitoreo de infraestructura virtualizada para Mundo Pacífico",
+  "type": "Empresa · Mundo Pacífico",
+  "status": "Live interno / demo de respaldo",
+  "role": "Desarrollador de software e infraestructura core en contexto de práctica profesional",
+  "icon": "Server",
+  "accent": "teal",
+  "cover": "/projects/proxmox/proxmox-card.webp",
+  "images": [
+    { "src": "/projects/proxmox/proxmox-summary.webp", "label": "Resumen ejecutivo" },
+    { "src": "/projects/proxmox/proxmox-clusters.webp", "label": "Clústers" },
+    { "src": "/projects/proxmox/proxmox-storage.webp", "label": "Storage" }
+  ],
+  "problem": "Supervisar manualmente clústers, nodos, VMs y crecimiento de recursos consumía demasiado tiempo y dificultaba auditorías mensuales.",
+  "solution": "Sistema Laravel que consume la API de Proxmox VE, centraliza métricas críticas y automatiza reportes de capacidad física y virtual.",
+  "metrics": [
+    ["~400", "VMs monitoreadas"],
+    ["10", "clústers"],
+    ["38", "nodos"],
+    ["2408", "CPU cores"],
+    ["517.4TB", "storage físico"]
+  ],
+  "stack": ["PHP", "Laravel", "Eloquent ORM", "Guzzle HTTP", "MySQL", "Blade", "JavaScript", "Proxmox VE API", "Ubuntu Server", "Apache"],
+  "links": [{ "label": "GitHub", "href": "https://github.com/SAVillena/Proxmox", "icon": "Github" }]
+}

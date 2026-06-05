@@ -1,19 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-    Activity,
-    ArrowLeft,
-    ArrowRight,
-    ArrowUpRight,
-    Bot,
-    Github,
-    Lock,
-    MapPin,
-    Maximize2,
-    Server,
-    Sparkles,
-    X,
-} from '../icons';
+import * as Icons from '../icons';
+import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 
 /* ─── Slide/Fade Animation Variants ──────────────────────────────────────── */
 const slideVariants = {
@@ -66,142 +54,6 @@ const usePreloadImages = (images, currentIndex) => {
     }, [images, currentIndex]);
 };
 
-const projects = [
-    {
-        id: 'gruas-ams',
-        title: 'Grúas AMS',
-        subtitle: 'Ecosistema de automatización logística e inteligencia territorial',
-        type: 'Freelance',
-        status: 'Live',
-        role: 'Ingeniero de Software e IA / Diseñador e implementador del ecosistema full stack',
-        icon: Bot,
-        accent: 'rose',
-        featured: true,
-        cover: '/projects/gruas-ams/gruas-ams-card.webp',
-        images: [
-            { src: '/projects/gruas-ams/gruas-ams-hero.webp', label: 'Landing principal' },
-            { src: '/projects/gruas-ams/gruas-ams-automation-flow.webp', label: 'Flujo n8n anonimizado' },
-            { src: '/projects/gruas-ams/gruas-ams-home-mobile.webp', label: 'Hero móvil' },
-            { src: '/projects/gruas-ams/gruas-ams-coverage-mobile.webp', label: 'Cobertura territorial' },
-        ],
-        problem: 'Fuga de ventas nocturnas por atención manual lenta en WhatsApp, cálculo tarifario complejo y bajo rendimiento SEO móvil en búsquedas de emergencia por comuna.',
-        solution: 'Arquitectura self-hosted con n8n, Chatwoot, Evolution API, agentes IA, Google Maps y landing pages programáticas para respuesta, cotización y despacho 24/7.',
-        metrics: [
-            ['<5s', 'respuesta automática'],
-            ['40%', 'menos carga manual'],
-            ['13.9s → <1.5s', 'mejora LCP'],
-            ['32', 'landings por comuna'],
-        ],
-        stack: ['n8n', 'OpenAI API', 'Gemini API', 'Chatwoot', 'Evolution API', 'Google Maps API', 'Next.js 15', 'Docker', 'Google Sheets API'],
-        links: [],
-    },
-    {
-        id: 'peluqueria',
-        title: 'Sistema de Reservas Premium',
-        subtitle: 'Agenda digital, catálogo y panel autogestionable para peluquería',
-        type: 'Freelance',
-        status: 'Demo / próxima puesta en marcha',
-        role: 'Desarrollador full-stack: arquitectura, diseño UI/UX y desarrollo',
-        icon: Sparkles,
-        accent: 'amber',
-        cover: '/projects/peluqueria/peluqueria-card.webp',
-        images: [
-            { src: '/projects/peluqueria/peluqueria-hero.webp', label: 'Sitio público' },
-            { src: '/projects/peluqueria/peluqueria-booking.webp', label: 'Reserva online' },
-            { src: '/projects/peluqueria/peluqueria-confirmation.webp', label: 'Confirmación y WhatsApp' },
-            { src: '/projects/peluqueria/peluqueria-dashboard.webp', label: 'Panel administrativo' },
-        ],
-        problem: 'La coordinación manual generaba cruces de horarios, exceso de mensajes y una experiencia poco clara para mostrar servicios, precios y disponibilidad.',
-        solution: 'Plataforma PERN con reserva online, validación de disponibilidad, confirmación de hora, catálogo administrable e imágenes gestionadas en Cloudinary.',
-        metrics: [
-            ['100%', 'agendamiento online'],
-            ['0%', 'cruces de horario'],
-            ['inmediato', 'edición de precios'],
-        ],
-        stack: ['React 19', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Prisma ORM', 'Cloudinary', 'JWT', 'Bcrypt'],
-        links: [],
-    },
-    {
-        id: 'solidarity-map',
-        title: 'Solidarity Map',
-        subtitle: 'Plataforma GIS para logística de emergencia',
-        type: 'Innovación / Personal',
-        status: 'Prototipo funcional / listo para piloto',
-        role: 'Diseñador y desarrollador autónomo de la arquitectura',
-        icon: MapPin,
-        accent: 'blue',
-        cover: '/projects/solidarity-map/solidarity-map-card.webp',
-        images: [
-            { src: '/projects/solidarity-map/solidarity-map-map.webp', label: 'Mapa interactivo' },
-            { src: '/projects/solidarity-map/solidarity-map-list.webp', label: 'Lista por cercanía' },
-            { src: '/projects/solidarity-map/solidarity-map-admin.webp', label: 'Panel de administración' },
-            { src: '/projects/solidarity-map/solidarity-map-location-modal.webp', label: 'Selección de ubicación' },
-            { src: '/projects/solidarity-map/solidarity-map-suggest-modal.webp', label: 'Sugerir centro' },
-        ],
-        problem: 'Durante emergencias, coordinar centros de acopio y veterinarias requiere datos confiables, georreferenciados y fáciles de consultar por cercanía.',
-        solution: 'Sistema con mapa, filtros, modo cercanía, sugerencias revisables e importación masiva de centros sobre una base espacial PostgreSQL/PostGIS.',
-        metrics: [
-            ['36', 'centros demo'],
-            ['radio', 'búsqueda por cercanía'],
-            ['admin', 'gestión de centros'],
-        ],
-        stack: ['Java', 'Spring Boot', 'PostgreSQL', 'PostGIS'],
-        links: [{ label: 'GitHub', href: 'https://github.com/SAVillena/Solidarity-Map', icon: Github }],
-    },
-    {
-        id: 'dustsense',
-        title: 'DustSense',
-        subtitle: 'Monitoreo ambiental geoespacial para minería',
-        type: 'Empresa · INNTECH',
-        status: 'Privado / producción interna',
-        role: 'Ingeniero de Software y Encargado de TI',
-        icon: Activity,
-        accent: 'emerald',
-        cover: '/projects/dustsense/dustsense-card.webp',
-        images: [
-            { src: '/projects/dustsense/dustsense-alerts.webp', label: 'Panel de alertas' },
-            { src: '/projects/dustsense/dustsense-monitoring-map.webp', label: 'Mapa geoespacial' },
-            { src: '/projects/dustsense/dustsense-charts.webp', label: 'Gráficos de series temporales' },
-        ],
-        problem: 'La faena necesitaba centralizar telemetría ambiental para medir, mapear y monitorear concentraciones de polvo PM2.5 y PM10 en tiempo real.',
-        solution: 'Arquitectura PERN con PostGIS para capturar flujos de sensores, espacializar datos, visualizar métricas críticas y activar alertas tempranas.',
-        metrics: [
-            ['tiempo real', 'telemetría ambiental'],
-            ['PM2.5 / PM10', 'umbrales críticos'],
-            ['PostGIS', 'datos geoespaciales'],
-        ],
-        stack: ['PostgreSQL', 'Express', 'React', 'Node.js', 'PostGIS', 'Datos georreferenciados'],
-        links: [{ label: 'Uso privado', icon: Lock }],
-    },
-    {
-        id: 'proxmox',
-        title: 'Inventario Automatizado Proxmox',
-        subtitle: 'Monitoreo de infraestructura virtualizada para Mundo Pacífico',
-        type: 'Empresa · Mundo Pacífico',
-        status: 'Live interno / demo de respaldo',
-        role: 'Desarrollador de software e infraestructura core en contexto de práctica profesional',
-        icon: Server,
-        accent: 'teal',
-        cover: '/projects/proxmox/proxmox-card.webp',
-        images: [
-            { src: '/projects/proxmox/proxmox-summary.webp', label: 'Resumen ejecutivo' },
-            { src: '/projects/proxmox/proxmox-clusters.webp', label: 'Clústers' },
-            { src: '/projects/proxmox/proxmox-storage.webp', label: 'Storage' },
-        ],
-        problem: 'Supervisar manualmente clústers, nodos, VMs y crecimiento de recursos consumía demasiado tiempo y dificultaba auditorías mensuales.',
-        solution: 'Sistema Laravel que consume la API de Proxmox VE, centraliza métricas críticas y automatiza reportes de capacidad física y virtual.',
-        metrics: [
-            ['~400', 'VMs monitoreadas'],
-            ['10', 'clústers'],
-            ['38', 'nodos'],
-            ['2408', 'CPU cores'],
-            ['517.4TB', 'storage físico'],
-        ],
-        stack: ['PHP', 'Laravel', 'Eloquent ORM', 'Guzzle HTTP', 'MySQL', 'Blade', 'JavaScript', 'Proxmox VE API', 'Ubuntu Server', 'Apache'],
-        links: [{ label: 'GitHub', href: 'https://github.com/SAVillena/Proxmox', icon: Github }],
-    },
-];
-
 const accentMap = {
     rose: 'border-rose-500/40 text-rose-300 bg-slate-950/80 backdrop-blur-md',
     amber: 'border-amber-500/40 text-amber-300 bg-slate-950/80 backdrop-blur-md',
@@ -235,18 +87,12 @@ const ImageFrame = ({ src, alt, className = '', imageClassName = '', loading = '
 
 /* ─── FullscreenLightbox ────────────────────────────────────────────────────
    Visor de pantalla completa con navegación, zoom y soporte táctil.
-   - Navegación con flechas (click o teclado)
-   - Swipe en mobile (touch events con umbral)
-   - Zoom con doble click
-   - Cierra con Escape o click en overlay
 ─────────────────────────────────────────────────────────────────────────── */
 const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
     usePreloadImages(images, currentIndex);
     const [zoomed, setZoomed] = useState(false);
     const [direction, setDirection] = useState(1);
     const prevIndexRef = useRef(currentIndex);
-    const touchStartRef = useRef({ x: 0, y: 0 });
-    const touchDeltaRef = useRef(0);
 
     /* Reset zoom y rastrear dirección al cambiar de imagen */
     useEffect(() => {
@@ -255,15 +101,11 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
         setZoomed(false);
     }, [currentIndex]);
 
-    useEffect(() => {
-        const handleKey = (e) => {
-            if (e.key === 'Escape') onClose();
-            if (e.key === 'ArrowLeft') onNavigate(-1);
-            if (e.key === 'ArrowRight') onNavigate(1);
-        };
-        window.addEventListener('keydown', handleKey);
-        return () => window.removeEventListener('keydown', handleKey);
-    }, [onClose, onNavigate]);
+    useKeyboardNavigation({
+        onEscape: onClose,
+        onArrowLeft: () => onNavigate(-1),
+        onArrowRight: () => onNavigate(1)
+    });
 
     /* Bloquear scroll del body */
     useEffect(() => {
@@ -274,23 +116,13 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
 
     const handleDoubleClick = () => setZoomed((z) => !z);
 
-    const handleTouchStart = (e) => {
-        if (zoomed) return;
-        touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        touchDeltaRef.current = 0;
-    };
-
-    const handleTouchMove = (e) => {
-        if (zoomed) return;
-        touchDeltaRef.current = e.touches[0].clientX - touchStartRef.current.x;
-    };
-
-    const handleTouchEnd = () => {
-        if (zoomed) return;
-        if (Math.abs(touchDeltaRef.current) > 60) {
-            onNavigate(touchDeltaRef.current > 0 ? -1 : 1);
+    const handleDragEnd = (e, { offset, velocity }) => {
+        const swipe = offset.x;
+        if (swipe < -50) {
+            onNavigate(1);
+        } else if (swipe > 50) {
+            onNavigate(-1);
         }
-        touchDeltaRef.current = 0;
     };
 
     return (
@@ -304,9 +136,6 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
             aria-modal="true"
             aria-label="Visor de imagen en pantalla completa"
             onClick={onClose}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
         >
             {/* Cerrar */}
             <button
@@ -315,7 +144,7 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                 className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/20"
                 aria-label="Cerrar visor"
             >
-                <X className="h-5 w-5" />
+                <Icons.X className="h-5 w-5" />
             </button>
 
             {/* Contador */}
@@ -331,7 +160,7 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                     className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/25 active:scale-95 sm:left-6 sm:p-4"
                     aria-label="Imagen anterior"
                 >
-                    <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <Icons.ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
             )}
 
@@ -343,11 +172,11 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                     className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white/25 active:scale-95 sm:right-6 sm:p-4"
                     aria-label="Imagen siguiente"
                 >
-                    <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <Icons.ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
             )}
 
-            {/* Imagen con slide/fade */}
+            {/* Imagen con slide/fade y Drag */}
             <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                     key={images[currentIndex].src}
@@ -357,7 +186,7 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                     animate="center"
                     exit="exit"
                     transition={slideTransition}
-                    className="relative z-[5] flex items-center justify-center"
+                    className="relative z-[5] flex items-center justify-center w-full h-full"
                     onClick={(e) => { e.stopPropagation(); handleDoubleClick(); }}
                 >
                     <motion.img
@@ -365,7 +194,11 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                         alt={images[currentIndex].label}
                         animate={{ scale: zoomed ? 2 : 1 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        className={`max-h-[85vh] max-w-[92vw] select-none object-contain sm:max-h-[88vh] sm:max-w-[90vw] ${zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+                        drag={!zoomed ? "x" : false}
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.8}
+                        onDragEnd={handleDragEnd}
+                        className={`max-h-[85vh] max-w-[92vw] select-none object-contain sm:max-h-[88vh] sm:max-w-[90vw] ${zoomed ? 'cursor-zoom-out' : 'cursor-grab active:cursor-grabbing'}`}
                         draggable={false}
                     />
                 </motion.div>
@@ -421,16 +254,11 @@ const ProjectModal = ({ project, onClose }) => {
     );
 
     /* Teclado para el modal */
-    useEffect(() => {
-        if (lightboxOpen) return;
-        const handleKey = (e) => {
-            if (e.key === 'Escape') onClose();
-            if (e.key === 'ArrowLeft') navigateImage(-1);
-            if (e.key === 'ArrowRight') navigateImage(1);
-        };
-        window.addEventListener('keydown', handleKey);
-        return () => window.removeEventListener('keydown', handleKey);
-    }, [onClose, navigateImage, lightboxOpen]);
+    useKeyboardNavigation({
+        onEscape: onClose,
+        onArrowLeft: () => navigateImage(-1),
+        onArrowRight: () => navigateImage(1)
+    }, !lightboxOpen);
 
     /* Bloquear scroll del body */
     useEffect(() => {
@@ -446,7 +274,7 @@ const ProjectModal = ({ project, onClose }) => {
         setLightboxOpen(true);
     };
 
-    const Icon = project.icon;
+    const Icon = Icons[project.icon] || Icons.Bot;
 
     return (
         <motion.div
@@ -515,7 +343,7 @@ const ProjectModal = ({ project, onClose }) => {
                             className="absolute right-14 top-4 z-20 rounded-lg bg-slate-950/70 p-2 text-slate-300 backdrop-blur transition hover:bg-slate-950/90 hover:text-white lg:hidden"
                             aria-label="Ver en pantalla completa"
                         >
-                            <Maximize2 className="h-5 w-5" />
+                            <Icons.Maximize2 className="h-5 w-5" />
                         </button>
 
                         {/* Flecha izquierda */}
@@ -526,7 +354,7 @@ const ProjectModal = ({ project, onClose }) => {
                                 className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-slate-950/60 p-2 text-white/80 backdrop-blur transition opacity-0 group-hover/gallery:opacity-100 hover:bg-slate-950/80 hover:text-white active:scale-95 sm:left-3 sm:p-2.5"
                                 aria-label="Imagen anterior"
                             >
-                                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                                <Icons.ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
                             </button>
                         )}
 
@@ -538,7 +366,7 @@ const ProjectModal = ({ project, onClose }) => {
                                 className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-slate-950/60 p-2 text-white/80 backdrop-blur transition opacity-0 group-hover/gallery:opacity-100 hover:bg-slate-950/80 hover:text-white active:scale-95 sm:right-4 sm:p-2.5 lg:right-4"
                                 aria-label="Imagen siguiente"
                             >
-                                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                                <Icons.ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                             </button>
                         )}
 
@@ -549,7 +377,7 @@ const ProjectModal = ({ project, onClose }) => {
                             className="absolute right-4 top-4 z-20 rounded-lg bg-slate-950/70 p-2 text-slate-300 backdrop-blur transition hover:bg-slate-950/90 hover:text-white lg:hidden"
                             aria-label="Cerrar"
                         >
-                            <X className="h-5 w-5" />
+                            <Icons.X className="h-5 w-5" />
                         </button>
 
                         {/* Click en imagen abre lightbox (solo desktop) */}
@@ -603,7 +431,7 @@ const ProjectModal = ({ project, onClose }) => {
                             className="hidden lg:flex rounded-lg bg-white/5 p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"
                             aria-label="Cerrar"
                         >
-                            <X className="h-5 w-5" />
+                            <Icons.X className="h-5 w-5" />
                         </button>
                     </div>
 
@@ -645,7 +473,7 @@ const ProjectModal = ({ project, onClose }) => {
                     <div className="mt-7 flex flex-wrap gap-3 pb-2">
                         {project.links.length > 0
                             ? project.links.map((link) => {
-                                  const LinkIcon = link.icon;
+                                  const LinkIcon = Icons[link.icon] || Icons.Bot;
                                   if (!link.href) {
                                       return (
                                           <span key={link.label} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-bold text-slate-400">
@@ -669,7 +497,7 @@ const ProjectModal = ({ project, onClose }) => {
                               })
                             : (
                                 <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-bold text-slate-400">
-                                    <Lock className="h-4 w-4" />
+                                    <Icons.Lock className="h-4 w-4" />
                                     Repo privado / información sensible
                                 </span>
                               )}
@@ -696,7 +524,7 @@ const ProjectModal = ({ project, onClose }) => {
    Tarjeta de proyecto en la lista.
 ─────────────────────────────────────────────────────────────────────────── */
 const ProjectCard = ({ project, onOpen }) => {
-    const Icon = project.icon;
+    const Icon = Icons[project.icon] || Icons.Bot;
 
     return (
         <motion.article
@@ -758,7 +586,7 @@ const ProjectCard = ({ project, onOpen }) => {
                             className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-950 transition hover:scale-[1.02] active:scale-100"
                         >
                             Ver caso
-                            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                            <Icons.ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                         </button>
                     </div>
                 </div>
@@ -768,7 +596,7 @@ const ProjectCard = ({ project, onOpen }) => {
 };
 
 /* ─── Projects (sección) ──────────────────────────────────────────────────── */
-const Projects = () => {
+const Projects = ({ projects }) => {
     const [selectedProject, setSelectedProject] = useState(null);
 
     return (
@@ -805,7 +633,7 @@ const Projects = () => {
                 </motion.div>
 
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    {projects.map((project) => (
+                    {projects && projects.map((project) => (
                         <ProjectCard key={project.id} project={project} onOpen={setSelectedProject} />
                     ))}
                 </div>

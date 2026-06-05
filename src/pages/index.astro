@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -7,6 +8,9 @@ import Projects from '../components/Projects';
 import Experience from '../components/Experience';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order).map(p => p.data);
 ---
 
 <Layout title="Sergio Villena | Full Stack, IA y Sistemas Geoespaciales">
@@ -21,7 +25,7 @@ import Footer from '../components/Footer';
     
     <!-- client:visible: hydrate only when the component enters the viewport (best for unused JS reduction) -->
     <Skills client:visible />
-    <Projects client:visible />
+    <Projects client:visible projects={sortedProjects} />
     <Experience client:visible />
     <Contact client:visible />
     <Footer client:visible />

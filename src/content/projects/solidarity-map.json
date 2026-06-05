@@ -1,0 +1,28 @@
+{
+  "order": 3,
+  "id": "solidarity-map",
+  "title": "Solidarity Map",
+  "subtitle": "Plataforma GIS para logística de emergencia",
+  "type": "Innovación / Personal",
+  "status": "Prototipo funcional / listo para piloto",
+  "role": "Diseñador y desarrollador autónomo de la arquitectura",
+  "icon": "MapPin",
+  "accent": "blue",
+  "cover": "/projects/solidarity-map/solidarity-map-card.webp",
+  "images": [
+    { "src": "/projects/solidarity-map/solidarity-map-map.webp", "label": "Mapa interactivo" },
+    { "src": "/projects/solidarity-map/solidarity-map-list.webp", "label": "Lista por cercanía" },
+    { "src": "/projects/solidarity-map/solidarity-map-admin.webp", "label": "Panel de administración" },
+    { "src": "/projects/solidarity-map/solidarity-map-location-modal.webp", "label": "Selección de ubicación" },
+    { "src": "/projects/solidarity-map/solidarity-map-suggest-modal.webp", "label": "Sugerir centro" }
+  ],
+  "problem": "Durante emergencias, coordinar centros de acopio y veterinarias requiere datos confiables, georreferenciados y fáciles de consultar por cercanía.",
+  "solution": "Sistema con mapa, filtros, modo cercanía, sugerencias revisables e importación masiva de centros sobre una base espacial PostgreSQL/PostGIS.",
+  "metrics": [
+    ["36", "centros demo"],
+    ["radio", "búsqueda por cercanía"],
+    ["admin", "gestión de centros"]
+  ],
+  "stack": ["Java", "Spring Boot", "PostgreSQL", "PostGIS"],
+  "links": [{ "label": "GitHub", "href": "https://github.com/SAVillena/Solidarity-Map", "icon": "Github" }]
+}
