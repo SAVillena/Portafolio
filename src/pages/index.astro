@@ -19,11 +19,11 @@ import Footer from '../components/Footer';
     <!-- Hydrate immediately for hero interactions/animations -->
     <Hero client:load />
     
-    <!-- client:idle: hydrate after page idle (faster than visible, less blocking than load) -->
-    <Skills client:idle />
-    <Projects client:idle />
-    <Experience client:idle />
-    <Contact client:idle />
-    <Footer client:idle />
+    <!-- client:visible: hydrate only when the component enters the viewport (best for unused JS reduction) -->
+    <Skills client:visible />
+    <Projects client:visible />
+    <Experience client:visible />
+    <Contact client:visible />
+    <Footer client:visible />
   </main>
 </Layout>

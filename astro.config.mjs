@@ -7,6 +7,9 @@ import vitePluginResizeImages from './vite-plugin-resize-images.js';
 export default defineConfig({
   site: 'https://sergio-villena-portfolio.vercel.app',
   integrations: [react()],
+  build: {
+    inlineStylesheets: 'always',
+  },
   vite: {
     plugins: [
       // Resize images to optimal dimensions per directory
