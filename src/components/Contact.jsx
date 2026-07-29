@@ -42,16 +42,19 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
+          access_key: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY,
+          subject: `Portafolio: ${formData.subject}`,
+          from_name: formData.name,
           name: formData.name,
           email: formData.email,
-          subject: formData.subject,
-          message: formData.message
+          message: formData.message,
         })
       });
 

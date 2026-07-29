@@ -498,7 +498,7 @@ const ProjectModal = ({ project, onClose }) => {
                             : (
                                 <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-bold text-slate-400">
                                     <Icons.Lock className="h-4 w-4" />
-                                    Repo privado / información sensible
+                                    {project.noLinksNote ?? 'Repo privado / información sensible'}
                                 </span>
                               )}
                     </div>

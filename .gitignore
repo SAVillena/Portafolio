@@ -46,6 +46,10 @@ public/profile/*.jpg
 # ── CVs duplicados / con nombre incorrecto ────────────────────────────────────
 public/cv/CV_Sergio_Villena_Ingeniero_Informatica (1).pdf
 
+# ── Artefactos de compilación LaTeX (regenerables, no versionar) ─────────────
+cv-drafts/*.aux
+cv-drafts/*.out
+
 # ── Variables de entorno ──────────────────────────────────────────────────────
 .env
 .env.*

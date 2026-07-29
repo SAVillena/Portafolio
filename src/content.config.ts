@@ -28,6 +28,7 @@ const projectCollection = defineCollection({
             href: z.string().optional(),
             icon: z.string(),
         })).optional().default([]),
+        noLinksNote: z.string().optional(),
     }),
 });
 

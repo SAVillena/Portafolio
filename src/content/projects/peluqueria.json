@@ -23,5 +23,6 @@
     ["inmediato", "edición de precios"]
   ],
   "stack": ["React 19", "Vite", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "Prisma ORM", "Cloudinary", "JWT", "Bcrypt"],
-  "links": []
+  "links": [],
+  "noLinksNote": "Proyecto para cliente — código no publicado aún"
 }

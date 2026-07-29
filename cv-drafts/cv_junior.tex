@@ -1,0 +1,104 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+
+% --- ESTILOS ---
+\definecolor{primary}{RGB}{0, 51, 102}
+\hypersetup{colorlinks=true, urlcolor=primary}
+
+\titleformat{\section}{\Large\bfseries\color{primary}\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% --- ENCABEZADO ---
+\begin{center}
+    {\Huge \textbf{SERGIO ALEXIS VILLENA VERGARA}} \\[0.2cm]
+    {\Large \textbf{Soporte Informático | Analista TI | Desarrollador Junior}} \\[0.2cm]
+    \small
+    \faMapMarker* Concepción, Chile \quad | \quad 
+    \faEnvelope \href{mailto:sergio.villena.vergara@gmail.com}{ sergio.villena.vergara@gmail.com} \quad | \quad 
+    \faPhone \ +56 9 3427 1281 \\
+    \href{https://linkedin.com/in/sergio-villena}{\faLinkedin \ LinkedIn} \quad | \quad 
+    \href{https://github.com/SAVillena}{\faGlobe \ Portafolio de Proyectos}
+\end{center}
+
+% --- PERFIL PROFESIONAL ---
+\section{Perfil Profesional}
+Profesional del área informática motivado por asegurar la continuidad operativa y brindar soporte tecnológico eficiente. Cuento con experiencia en monitoreo de sistemas, soporte a infraestructura y desarrollo de aplicaciones. Destaco por mi proactividad, pensamiento analítico y capacidad para aprender rápidamente. Busco aportar mis conocimientos técnicos para resolver problemas de manera directa y entregar resultados concretos que beneficien la operación diaria del negocio.
+
+% --- HABILIDADES TÉCNICAS ---
+\section{Habilidades Técnicas}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item \textbf{Soporte y Operaciones:} Sistemas Operativos Linux (SysAdmin) y Windows, Monitoreo de Redes, Mantenimiento Preventivo, Diagnóstico de Fallas de Hardware y Software.
+    \item \textbf{Desarrollo y Bases de Datos:} Conocimientos sólidos en Java, Node.js, Python, y consultas SQL (PostgreSQL).
+    \item \textbf{Herramientas Informáticas:} Git, Docker, Ofimática avanzada, Sistemas de Ticket, Metodologías Ágiles (SCRUM).
+\end{itemize}
+
+% --- EXPERIENCIA PROFESIONAL ---
+\section{Experiencia Profesional}
+
+\noindent \textbf{Encargado de TI y Soporte de Software (Freelance)} \hfill \textbf{Dic 2024 -- Presente} \\
+\textit{INNTECH} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item Brindé soporte técnico y supervisé el funcionamiento continuo de sistemas informáticos en terreno, garantizando una disponibilidad operativa del \textbf{99.9\%}.
+    \item Coordiné la instalación y puesta en marcha de equipos para el monitoreo de infraestructura energética.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Analista de Automatización (Freelance)} \hfill \textbf{Marzo 2025 -- Presente} \\
+\textit{Empresa de Transportes} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item Implementé herramientas informáticas (n8n) para automatizar el procesamiento de datos y la creación de reportes.
+    \item Reduje en un 40\% la carga de trabajo manual del equipo al optimizar tareas repetitivas y flujos de información.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Desarrollador Junior (Proyecto de Título)} \hfill \textbf{Marzo 2024 -- Nov 2024} \\
+\textit{INNTECH} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item Participé en el desarrollo de una plataforma web para la visualización de datos en tiempo real.
+    \item Diseñé y gestioné bases de datos para asegurar el almacenamiento ordenado de información sobre calidad del aire.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Técnico de Monitoreo de Sistemas} \hfill \textbf{Nov 2023 -- Feb 2024} \\
+\textit{Mundo OyM} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item Monitoreé de manera centralizada el estado de \textbf{más de 200 servidores y máquinas virtuales} utilizando plataformas dedicadas.
+    \item Automaticé la generación de reportes de estado, lo cual eliminó la necesidad de inspecciones manuales constantes.
+\end{itemize}
+
+% --- PROYECTOS DESTACADOS ---
+\section{Proyectos de Innovación}
+
+\noindent \textbf{Inventario Automatizado Proxmox} \hfill \textbf{2024} \\
+\textit{Monitoreo de Infraestructura Virtualizada para Mundo Pacífico}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Sistema \textbf{Laravel} que consume la API de \textbf{Proxmox VE} para centralizar métricas de clústers, nodos y VMs, automatizando reportes de capacidad. Gestión de \textbf{+400 VMs}, 10 clústers, 38 nodos y 517.4 TB de storage físico.
+\end{itemize}
+
+% --- FORMACIÓN Y CERTIFICACIONES ---
+\section{Formación y Certificaciones}
+\noindent \textbf{Ingeniería Civil en Informática} | Universidad del Bío-Bío \hfill \textbf{2020 -- 2024} \\
+\noindent \textbf{Especialización en Desarrollo Backend} | Oracle Next Education (ONE) \hfill \textbf{2026} \\
+\noindent \textbf{Certificación en Infraestructura Cloud (OCI)} | Alura LATAM \hfill \textbf{2026} 
+
+\vspace{0.2cm}
+
+\section{Idiomas}
+\textbf{Español:} Nativo \quad | \quad \textbf{Inglés:} Nivel B2 - Técnico (Lectura fluida para manuales y documentación técnica).
+
+\end{document}

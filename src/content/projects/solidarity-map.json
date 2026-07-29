@@ -20,8 +20,8 @@
   "solution": "Sistema con mapa, filtros, modo cercanía, sugerencias revisables e importación masiva de centros sobre una base espacial PostgreSQL/PostGIS.",
   "metrics": [
     ["36", "centros demo"],
-    ["radio", "búsqueda por cercanía"],
-    ["admin", "gestión de centros"]
+    ["Cercanía", "búsqueda por radio"],
+    ["Panel admin", "gestión de centros"]
   ],
   "stack": ["Java", "Spring Boot", "PostgreSQL", "PostGIS"],
   "links": [{ "label": "GitHub", "href": "https://github.com/SAVillena/Solidarity-Map", "icon": "Github" }]

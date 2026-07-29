@@ -1,0 +1,136 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+
+% --- ESTILOS ---
+\definecolor{primary}{RGB}{0, 51, 102}
+\hypersetup{colorlinks=true, urlcolor=primary}
+
+\titleformat{\section}{\Large\bfseries\color{primary}\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% --- ENCABEZADO ---
+\begin{center}
+    {\Huge \textbf{SERGIO ALEXIS VILLENA VERGARA}} \\[0.2cm]
+    {\Large \textbf{Ingeniero Civil Informático | Especialización en Desarrollo Full Stack y Automatización de Datos}} \\[0.2cm]
+    \small
+    \faMapMarker* Concepción, Chile \quad | \quad 
+    \faEnvelope \href{mailto:sergio.villena.vergara@gmail.com}{ sergio.villena.vergara@gmail.com} \quad | \quad 
+    \faPhone \ +56 9 3427 1281 \\
+    \href{https://linkedin.com/in/sergio-villena}{\faLinkedin \ LinkedIn} \quad | \quad 
+    \href{https://github.com/SAVillena}{\faGlobe \ Portafolio de Proyectos}
+\end{center}
+
+% --- PERFIL PROFESIONAL ---
+\section{Perfil Profesional}
+Ingeniero Civil en Informática con sólida formación analítica y especialización en desarrollo Full Stack y automatización de flujos de datos. Altamente competente en la creación de arquitecturas desacopladas (React + Spring Boot/Node.js), optimización de consultas SQL y construcción de pipelines robustos con bases de datos relacionales y espaciales (PostgreSQL/PostGIS). Profesional proactivo y autónomo, orientado a garantizar el rendimiento, la escalabilidad y la alta disponibilidad en ecosistemas en la nube.
+
+% --- HABILIDADES TÉCNICAS ---
+\section{Habilidades Técnicas}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item \textbf{Desarrollo Full Stack:} Java (Spring Boot), Node.js, Express, React, Arquitecturas Desacopladas, JWT.
+    \item \textbf{Ingeniería de Datos y Automatización:} Modelado relacional y espacial, Procesos ETL, Orquestación en n8n, Shell Scripting, Optimización SQL.
+    \item \textbf{Infraestructura y Bases de Datos:} PostgreSQL, PostGIS, Oracle Cloud Infrastructure (OCI), Docker, SysAdmin en Linux.
+    \item \textbf{Metodologías y Herramientas:} Git, SCRUM, Arquitectura Limpia, Prompt Engineering, LLMs.
+\end{itemize}
+
+% --- EXPERIENCIA PROFESIONAL ---
+\section{Experiencia Profesional}
+
+\noindent \textbf{Ingeniero de Software, Automatización y Datos (Freelance)} \hfill \textbf{Marzo 2025 -- Presente} \\
+\textit{Consultoría Tecnológica} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item \textbf{Pipeline de Datos:} Diseñé e implementé la reingeniería del flujo de ingesta y procesamiento de datos operativos utilizando n8n. Reduje la carga operativa manual en un 40\% automatizando reportes de estado.
+    \item \textbf{Desarrollo de Arquitecturas Escalables:} Construcción de plataformas Full Stack con arquitecturas desacopladas (React + Spring Boot), garantizando seguridad e integridad de datos en la nube.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Ingeniero de Software y Encargado de TI} \hfill \textbf{Dic 2024 -- Mar 2025} \\
+\textit{INNTECH} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item \textbf{Sistemas de Información Crítica (GIS):} Coordiné la puesta en marcha de un sistema de información geográfica en tiempo real aplicado a infraestructura energética.
+    \item \textbf{Continuidad y Rendimiento:} Aseguré la disponibilidad y consistencia de los flujos de datos en terreno, logrando un \textbf{99.9\% de uptime} bajo plazos estrictos.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Desarrollador Full Stack y Datos (Proyecto de Título)} \hfill \textbf{Marzo 2024 -- Nov 2024} \\
+\textit{INNTECH} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item \textbf{Arquitectura PERN \& PostGIS:} Estructuré un sistema basado en el Stack PERN (PostgreSQL, Express, React, Node.js) con bases de datos geoespaciales para analizar telemetría ambiental (PM2.5 y PM10) en la minería.
+    \item \textbf{Monitoreo Ambiental:} Lideré el diseño integral de la plataforma de ingesta y visualización de métricas críticas.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Ingeniero de Virtualización y Monitoreo} \hfill \textbf{Nov 2023 -- Feb 2024} \\
+\textit{Mundo OyM} \hfill \textit{Concepción}
+\begin{itemize}[leftmargin=*, noitemsep, topsep=2pt]
+    \item \textbf{Procesamiento a Gran Escala:} Integré la API de Proxmox VE para supervisar métricas de un clúster de \textbf{+200 máquinas virtuales}, eliminando inspecciones manuales con reportes predictivos.
+\end{itemize}
+
+% --- PROYECTOS DESTACADOS ---
+\section{Proyectos de Innovación}
+
+\noindent \textbf{Solidarity Map} \hfill \textbf{2026} \\
+\textit{Plataforma GIS de Gestión Logística en Emergencias} 
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Diseñé de forma autónoma una arquitectura escalable en Java (Spring Boot) y PostgreSQL (PostGIS) para la ingesta y georreferenciación masiva de datos espaciales orientados a mapear centros de asistencia.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Grúas AMS} \hfill \textbf{2025} \\
+\textit{Ecosistema de Automatización Logística e Inteligencia Territorial} 
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Arquitectura self-hosted con \textbf{n8n}, \textbf{Chatwoot}, \textbf{Evolution API} y agentes IA para atención, cotización y despacho 24/7. Implementé landing pages programáticas con \textbf{Next.js 15} y \textbf{Google Maps API}, logrando respuesta automática en $<$5s y 40\% menos carga manual.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Sistema de Reservas Premium} \hfill \textbf{2025} \\
+\textit{Agenda Digital, Catálogo y Panel Autogestionable para Peluquería} 
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Plataforma \textbf{PERN} (React 19, Node.js, Express, PostgreSQL con Prisma ORM) con reserva online, validación de disponibilidad, catálogo administrable e imágenes en \textbf{Cloudinary}. Eliminé cruces de horario y agendamiento 100\% digital.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{DustSense} \hfill \textbf{2024} \\
+\textit{Monitoreo Ambiental Geoespacial para Minería} 
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Arquitectura \textbf{PERN con PostGIS} para capturar flujos de sensores, espacializar datos y visualizar métricas de calidad del aire (\textbf{PM2.5 y PM10}) en tiempo real con alertas tempranas.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\noindent \textbf{Inventario Automatizado Proxmox} \hfill \textbf{2024} \\
+\textit{Monitoreo de Infraestructura Virtualizada para Mundo Pacífico}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Sistema \textbf{Laravel} que consume la API de \textbf{Proxmox VE} para centralizar métricas de clústers, nodos y VMs, automatizando reportes de capacidad. Gestión de \textbf{+400 VMs}, 10 clústers, 38 nodos y 517.4 TB de storage físico.
+\end{itemize}
+
+% --- FORMACIÓN Y CERTIFICACIONES ---
+\section{Formación y Certificaciones}
+\noindent \textbf{Ingeniería Civil en Informática} | Universidad del Bío-Bío \hfill \textbf{2020 -- 2024} \\
+\noindent \textbf{Especialización Backend Developer} | Oracle Next Education (ONE) \hfill \textbf{2026} \\
+\noindent \textbf{Certificación Oracle Cloud Infrastructure (OCI): Fundamentos} | Alura LATAM \hfill \textbf{2026} 
+
+\vspace{0.2cm}
+
+\section{Idiomas}
+\textbf{Español:} Nativo \quad | \quad \textbf{Inglés:} Nivel B2 - Técnico.
+
+\end{document}
