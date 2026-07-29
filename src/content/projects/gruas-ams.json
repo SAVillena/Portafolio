@@ -14,7 +14,7 @@
     { "src": "/projects/gruas-ams/gruas-ams-hero.webp", "label": "Landing principal" },
     { "src": "/projects/gruas-ams/gruas-ams-automation-flow.webp", "label": "Flujo n8n anonimizado" },
     { "src": "/projects/gruas-ams/gruas-ams-home-mobile.webp", "label": "Hero móvil" },
-    { "src": "/projects/gruas-ams/gruas-ams-coverage-mobile.webp", "label": "Cobertura territorial" }
+    { "src": "/projects/gruas-ams/gruas-ams-coverage.webp", "label": "Cobertura territorial" }
   ],
   "problem": "Fuga de ventas nocturnas por atención manual lenta en WhatsApp, cálculo tarifario complejo y bajo rendimiento SEO móvil en búsquedas de emergencia por comuna.",
   "solution": "Arquitectura self-hosted con n8n, Chatwoot, Evolution API, agentes IA, Google Maps y landing pages programáticas para respuesta, cotización y despacho 24/7.",
