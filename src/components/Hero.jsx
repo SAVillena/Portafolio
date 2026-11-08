@@ -5,13 +5,11 @@ import {
     ArrowUpRight,
     Building2,
     CheckCircle2,
-    Code2,
     Download,
     Github,
     Linkedin,
     Mail,
     MapPin,
-    Receipt,
     UserCheck,
 } from '../icons';
 import useMagnetic from '../hooks/useMagnetic';
@@ -27,7 +25,6 @@ const audienceModes = {
         tabLabel: 'Para Reclutadores',
         icon: UserCheck,
         badge: 'Ingeniero Civil en Informática · Backend & Full Stack',
-        kicker: 'INGENIERÍA DE SOFTWARE & SISTEMAS EMPRESARIALES',
         titleStart: 'Desarrollo sistemas ',
         titleFramed: 'ERP y Backend',
         titleEnd: ' listos para producción.',
@@ -45,7 +42,7 @@ const audienceModes = {
             icon: Download,
         },
         secondaryCta: {
-            label: 'Ver Experiencia',
+            label: 'Ver Trayectoria',
             href: '#trayectoria',
             icon: ArrowDown,
         },
@@ -55,7 +52,6 @@ const audienceModes = {
         tabLabel: 'Servicios Informáticos',
         icon: Building2,
         badge: 'Desarrollo de Software & Consultoría TI a Medida',
-        kicker: 'SOLUCIONES TECNOLÓGICAS PARA EMPRESAS',
         titleStart: 'Software a medida que ',
         titleFramed: 'ordena y escala',
         titleEnd: ' la operación de tu negocio.',
@@ -144,7 +140,7 @@ const Hero = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-                    {/* ── Columna Izquierda: Título Editorial sin Degradado + Copy Breve ── */}
+                    {/* ── Columna Izquierda: Limpia, Directa y Rápida de Escanear ── */}
                     <div className="lg:col-span-7 opacity-0 animate-fade-in-up">
                         <AnimatePresence mode="wait">
                             <motion.div
@@ -159,11 +155,6 @@ const Hero = () => {
                                     {activeContent.badge}
                                 </div>
 
-                                <p className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-slate-500 mb-3">
-                                    // {activeContent.kicker}
-                                </p>
-
-                                {/* Nuevo Título Arquitectónico: Blanco Puro + Bloque Técnico Enmarcado */}
                                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-5 tracking-tight leading-[1.08]">
                                     {activeContent.titleStart}
                                     <span className="title-frame">{activeContent.titleFramed}</span>
@@ -174,20 +165,14 @@ const Hero = () => {
                                     {activeContent.description}
                                 </p>
 
-                                {/* 3 Puntos breves de enganche rápido */}
-                                <div
-                                    onMouseMove={handleCardMouseMove}
-                                    className="spotlight-card rounded-2xl p-4 mb-7 max-w-xl"
-                                >
-                                    <div className="relative z-10 space-y-2">
-                                        {activeContent.highlights.map((point) => (
-                                            <div key={point} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-200">
-                                                <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                                                <span>{point}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                <ul className="space-y-2.5 mb-8 max-w-xl">
+                                    {activeContent.highlights.map((point) => (
+                                        <li key={point} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-200">
+                                            <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
+                                            <span>{point}</span>
+                                        </li>
+                                    ))}
+                                </ul>
 
                                 {/* CTAs */}
                                 <div className="flex flex-wrap gap-3.5 mb-7">
@@ -237,33 +222,11 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    {/* ── Columna Derecha: Retrato HUD + Telemetría ── */}
+                    {/* ── Columna Derecha: Retrato Limpio + Indicadores Clave ── */}
                     <div className="lg:col-span-5 opacity-0 animate-fade-in-scale">
                         <div className="flex flex-col gap-4 relative">
-                            {/* Floating Badge 1 */}
-                            <div className="hidden sm:flex items-center gap-2.5 absolute -left-5 top-6 z-30 rounded-2xl border border-sky-400/30 bg-slate-950/90 px-3.5 py-2.5 backdrop-blur-xl shadow-2xl animate-float-slow">
-                                <div className="w-8 h-8 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
-                                    <Receipt className="w-4 h-4" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black uppercase tracking-wider text-sky-400">ERP & Facturación DTE</p>
-                                    <p className="text-xs font-bold text-white">PHP / Laravel · Nubox</p>
-                                </div>
-                            </div>
-
-                            {/* Floating Badge 2 */}
-                            <div className="hidden sm:flex items-center gap-2.5 absolute -right-4 bottom-28 z-30 rounded-2xl border border-blue-400/30 bg-slate-950/90 px-3.5 py-2.5 backdrop-blur-xl shadow-2xl animate-float-delayed">
-                                <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-blue-400">
-                                    <Code2 className="w-4 h-4" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black uppercase tracking-wider text-blue-400">Arquitectura Full Stack</p>
-                                    <p className="text-xs font-bold text-white">React · Spring Boot · SQL</p>
-                                </div>
-                            </div>
-
-                            {/* Portrait Frame */}
-                            <div className="hud-frame overflow-hidden rounded-[2rem] border border-white/15 bg-slate-900/60 shadow-2xl shadow-blue-950/50 scanner">
+                            {/* Portrait Frame sin tarjetas flotantes ni láser distractor */}
+                            <div className="hud-frame overflow-hidden rounded-[2rem] border border-white/15 bg-slate-900/60 shadow-2xl shadow-blue-950/50">
                                 <div className="hud-corner-tl" />
                                 <div className="hud-corner-tr" />
                                 <div className="hud-corner-bl" />
@@ -272,7 +235,7 @@ const Hero = () => {
                                 <img
                                     src="/profile/sergio-villena-portrait.webp"
                                     alt="Sergio Villena — Ingeniero Civil en Informática"
-                                    className="h-[360px] sm:h-[405px] w-full object-cover object-[center_8%]"
+                                    className="h-[360px] sm:h-[400px] w-full object-cover object-[center_8%]"
                                     loading="eager"
                                 />
 

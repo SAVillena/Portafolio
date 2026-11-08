@@ -1,13 +1,14 @@
 {
-  "order": 5,
+  "order": 1,
   "id": "proxmox",
   "title": "Inventario Automatizado Proxmox",
   "subtitle": "Auditoría y monitoreo de clústers para Mundo Pacífico",
   "type": "Empresa · Mundo Pacífico",
-  "status": "Producción Interna",
-  "role": "Desarrollador de Software e Infraestructura",
+  "status": "Producción Empresarial",
+  "role": "Desarrollador de Software (PHP/Laravel) e Infraestructura",
   "icon": "Server",
   "accent": "teal",
+  "featured": true,
   "cover": "/projects/proxmox/proxmox-storage.webp",
   "images": [
     { "src": "/projects/proxmox/proxmox-storage.webp", "label": "Resumen ejecutivo de recursos" },
@@ -22,6 +23,6 @@
     ["38", "nodos físicos"],
     ["517.4 TB", "storage auditado"]
   ],
-  "stack": ["PHP", "Laravel", "MySQL", "Proxmox VE API", "Eloquent ORM", "Guzzle HTTP", "Linux"],
+  "stack": ["PHP 8+", "Laravel", "MySQL", "Proxmox VE API", "Eloquent ORM", "Guzzle HTTP", "Linux"],
   "links": [{ "label": "GitHub", "href": "https://github.com/SAVillena/Proxmox", "icon": "Github" }]
 }

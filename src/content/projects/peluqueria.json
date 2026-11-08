@@ -1,11 +1,11 @@
 {
-  "order": 2,
+  "order": 5,
   "id": "peluqueria",
-  "title": "Sistema de Reservas Premium",
-  "subtitle": "Agenda digital, catálogo y panel autogestionable",
-  "type": "Freelance",
-  "status": "Demo Funcional",
-  "role": "Desarrollador Full Stack — Arquitectura PERN, UI/UX y panel de control",
+  "title": "Sistema de Reservas y Gestión",
+  "subtitle": "Agenda digital sin cruces, catálogo y panel administrativo",
+  "type": "Cliente · Full Stack",
+  "status": "Arquitectura PERN",
+  "role": "Desarrollador Full Stack — Backend, base de datos y panel de control",
   "icon": "Sparkles",
   "accent": "amber",
   "cover": "/projects/peluqueria/peluqueria-hero.webp",
@@ -16,12 +16,12 @@
     { "src": "/projects/peluqueria/peluqueria-confirmation.webp", "label": "Comprobante y WhatsApp (Móvil)" },
     { "src": "/projects/peluqueria/peluqueria-dashboard.webp", "label": "Panel administrativo" }
   ],
-  "problem": "La coordinación manual generaba cruces de horarios, exceso de mensajes y falta de visibilidad clara de servicios, precios y disponibilidad en tiempo real.",
-  "solution": "Plataforma PERN con reserva online, validación de bloques horarios, comprobante instantáneo para WhatsApp, catálogo administrable e imágenes en Cloudinary.",
+  "problem": "La coordinación manual generaba cruces de horarios, exceso de mensajes y falta de visibilidad de servicios, precios y disponibilidad en tiempo real.",
+  "solution": "Aplicación Full Stack (React 19, Node/Express, PostgreSQL y Prisma ORM) con validación de bloques horarios, autenticación JWT y panel administrativo autogestionable.",
   "metrics": [
     ["100%", "agendamiento online"],
     ["0%", "cruces de horario"],
-    ["Inmediato", "control de catálogo"]
+    ["JWT + ORM", "arquitectura segura"]
   ],
   "stack": ["React 19", "Node.js", "Express", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "Cloudinary", "JWT"],
   "links": [],

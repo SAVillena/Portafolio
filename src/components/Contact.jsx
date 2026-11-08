@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import {
     Check,
     Copy,
-    Download,
     Github,
     Linkedin,
     Mail,
@@ -42,32 +41,22 @@ const quickTopics = [
     {
         label: '💼 Reclutamiento / Rol TI',
         subject: 'Oportunidad Laboral / Proceso de Selección',
-        placeholder:
-            'Hola Sergio, te escribo por una oportunidad para el rol de... (Modalidad y stack principal).',
     },
     {
         label: '🧾 Sistema ERP / Facturación DTE',
         subject: 'Sistema ERP / Facturación DTE',
-        placeholder:
-            'Necesitamos desarrollar o integrar módulos ERP / facturación electrónica (DTE, Nubox o Laravel) para nuestra empresa...',
     },
     {
         label: '🌐 Desarrollo Web / Reservas / SEO',
         subject: 'Desarrollo Web Full Stack / Reservas / SEO',
-        placeholder:
-            'Queremos crear o modernizar nuestra plataforma web / sistema de reservas y posicionamiento en Google...',
     },
     {
         label: '🤖 Automatización / Integración API',
         subject: 'Automatización de Procesos / Agentes IA',
-        placeholder:
-            'Buscamos automatizar nuestra atención, cotizaciones o flujo de reportes operativos...',
     },
     {
         label: '☁️ Cloud (Oracle) / CI/CD / GIS',
         subject: 'Cloud (Oracle) / CI/CD / GIS',
-        placeholder:
-            'Necesitamos arquitectura cloud (Oracle OCI), automatización de despliegues CI/CD o sistemas GIS (PostGIS)...',
     },
 ];
 
@@ -78,7 +67,6 @@ const Contact = () => {
         subject: '',
         message: '',
     });
-    const [selectedTopic, setSelectedTopic] = useState('');
     const [copied, setCopied] = useState(false);
     const [status, setStatus] = useState('idle');
 
@@ -86,7 +74,6 @@ const Contact = () => {
         const handleExternalTopic = (event) => {
             const topicText = event.detail;
             if (topicText) {
-                setSelectedTopic(topicText);
                 setFormData((prev) => ({ ...prev, subject: topicText }));
             }
         };
@@ -96,7 +83,6 @@ const Contact = () => {
     }, []);
 
     const handleTopicSelect = (topic) => {
-        setSelectedTopic(topic.subject);
         setFormData((prev) => ({
             ...prev,
             subject: topic.subject,
@@ -140,7 +126,6 @@ const Contact = () => {
             if (response.ok && result.success === true) {
                 setStatus('success');
                 setFormData({ name: '', email: '', subject: '', message: '' });
-                setSelectedTopic('');
                 setTimeout(() => setStatus('idle'), 5000);
             } else {
                 setStatus('error');
@@ -155,11 +140,6 @@ const Contact = () => {
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
-
-    const activeTopicObj = quickTopics.find((t) => t.subject === selectedTopic);
-    const dynamicPlaceholder =
-        activeTopicObj?.placeholder ||
-        'Cuéntame brevemente sobre el rol, proyecto o sistema que necesitas...';
 
     return (
         <section id="contact" className="py-24 relative">
@@ -248,16 +228,6 @@ const Contact = () => {
                                 <div key={item.label}>{content}</div>
                             );
                         })}
-
-                        <a
-                            href="/cv/sergio-villena-cv.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-white px-5 py-4 text-xs sm:text-sm font-black uppercase tracking-widest text-slate-950 transition hover:scale-[1.01] hover:bg-sky-50 shadow-xl"
-                        >
-                            <Download className="h-4 w-4" />
-                            Descargar CV Actualizado (PDF)
-                        </a>
                     </motion.div>
 
                     {/* ── Columna Derecha: Formulario Guiado ── */}
@@ -306,7 +276,6 @@ const Contact = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-sky-400"
-                                        placeholder="Tu nombre o empresa"
                                     />
                                 </label>
                                 <label className="block">
@@ -320,7 +289,6 @@ const Contact = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-sky-400"
-                                        placeholder="tu@empresa.cl"
                                     />
                                 </label>
                             </div>
@@ -336,7 +304,6 @@ const Contact = () => {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     className="w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-sky-400"
-                                    placeholder="Motivo del mensaje"
                                 />
                             </label>
 
@@ -351,7 +318,6 @@ const Contact = () => {
                                     value={formData.message}
                                     onChange={handleChange}
                                     className="w-full resize-none rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-sky-400"
-                                    placeholder={dynamicPlaceholder}
                                 />
                             </label>
 

@@ -36,10 +36,10 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Inicio', href: '#inicio' },
-        { name: 'Servicios TI', href: '#servicios' },
-        { name: 'Habilidades', href: '#habilidades' },
-        { name: 'Proyectos', href: '#proyectos' },
         { name: 'Experiencia', href: '#trayectoria' },
+        { name: 'Proyectos', href: '#proyectos' },
+        { name: 'Habilidades', href: '#habilidades' },
+        { name: 'Servicios TI', href: '#servicios' },
         { name: 'Contacto', href: '#contact' },
     ];
 

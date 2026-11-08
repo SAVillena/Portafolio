@@ -69,9 +69,9 @@ const spotlightByAccent = {
 
 const projectCategories = [
     { id: 'all', label: 'Todos los Casos (5)' },
-    { id: 'ia-web', label: 'Plataformas Web & Automatización', match: ['gruas-ams', 'peluqueria'] },
-    { id: 'gis', label: 'GIS & Telemetría (PostGIS)', match: ['solidarity-map', 'dustsense'] },
     { id: 'laravel-infra', label: 'PHP/Laravel & Infraestructura', match: ['proxmox'] },
+    { id: 'gis', label: 'Spring Boot, GIS & Telemetría', match: ['dustsense', 'solidarity-map'] },
+    { id: 'ia-web', label: 'Full Stack Web & Integraciones', match: ['gruas-ams', 'peluqueria'] },
 ];
 
 /* ─── ImageStage ────────────────────────────────────────────────────────────

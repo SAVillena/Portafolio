@@ -1,26 +1,24 @@
 {
-  "order": 1,
+  "order": 4,
   "id": "gruas-ams",
   "title": "Grúas AMS",
-  "subtitle": "Ecosistema de automatización logística e inteligencia territorial",
-  "type": "Freelance",
+  "subtitle": "Plataforma web de alta conversión, cotización automática y SEO",
+  "type": "Cliente Real · Producción",
   "status": "Live en Producción",
-  "role": "Ingeniero de Software Full Stack — Arquitectura, automatización y SEO",
+  "role": "Ingeniero de Software Full Stack — Arquitectura, integraciones y SEO",
   "icon": "Bot",
   "accent": "rose",
-  "featured": true,
   "cover": "/projects/gruas-ams/gruas-ams-hero.webp",
   "images": [
     { "src": "/projects/gruas-ams/gruas-ams-hero.webp", "label": "Landing principal (Desktop)" },
     { "src": "/projects/gruas-ams/gruas-ams-coverage.webp", "label": "Buscador de cobertura RM" },
-    { "src": "/projects/gruas-ams/gruas-ams-automation-flow.webp", "label": "Arquitectura de automatización" },
     { "src": "/projects/gruas-ams/gruas-ams-home-mobile.webp", "label": "Vista móvil optimizada" }
   ],
-  "problem": "Fuga de ventas nocturnas por atención manual lenta en WhatsApp, cálculo tarifario complejo y bajo rendimiento SEO móvil en búsquedas de emergencia por comuna.",
-  "solution": "Arquitectura self-hosted con agentes de IA, Chatwoot, Evolution API, Google Maps y landing pages programáticas en Next.js 15 para respuesta, cotización y despacho 24/7.",
+  "problem": "Fuga de ventas nocturnas por atención manual lenta en WhatsApp, cálculo tarifario complejo por kilómetro y bajo posicionamiento SEO móvil por comuna.",
+  "solution": "Plataforma en Next.js 15 con 32 landings programáticas por comuna, cálculo de rutas con Google Maps API y atención automatizada 24/7 integrada con WhatsApp y CRM.",
   "metrics": [
     ["<5s", "respuesta automática"],
-    ["40%", "menos carga manual"],
+    ["-40%", "carga operativa"],
     ["<1.5s", "carga LCP móvil"],
     ["32", "landings por comuna"]
   ],

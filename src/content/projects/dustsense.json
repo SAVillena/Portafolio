@@ -1,23 +1,23 @@
 {
-  "order": 4,
+  "order": 2,
   "id": "dustsense",
   "title": "DustSense",
   "subtitle": "Monitoreo ambiental geoespacial para minería",
   "type": "Empresa · INNTECH",
-  "status": "Producción Interna",
+  "status": "Producción Empresarial",
   "role": "Ingeniero de Software y Encargado de TI",
   "icon": "Activity",
   "accent": "emerald",
-  "cover": "/projects/dustsense/dustsense-monitoring-map.webp",
+  "cover": "/projects/dustsense/dustsense-charts.webp",
   "images": [
-    { "src": "/projects/dustsense/dustsense-monitoring-map.webp", "label": "Mapa geoespacial en tiempo real" },
-    { "src": "/projects/dustsense/dustsense-alerts.webp", "label": "Panel de alertas PM2.5 y PM10" },
-    { "src": "/projects/dustsense/dustsense-charts.webp", "label": "Gráficos y series temporales" }
+    { "src": "/projects/dustsense/dustsense-charts.webp", "label": "Análisis y series temporales PM2.5 / PM10" },
+    { "src": "/projects/dustsense/dustsense-alerts.webp", "label": "Panel de alertas por umbral" },
+    { "src": "/projects/dustsense/dustsense-monitoring-map.webp", "label": "Red geoespacial de sensores" }
   ],
   "problem": "La operación minera necesitaba centralizar telemetría ambiental para medir, mapear y alertar concentraciones críticas de material particulado PM2.5 y PM10 en tiempo real.",
-  "solution": "Plataforma PERN con PostGIS para ingesta continua de sensores, visualización territorial interactiva, series históricas y alertas por umbral.",
+  "solution": "Plataforma PERN con PostGIS para ingesta continua de sensores, visualización territorial interactiva, series históricas, reportes PDF y alertas por umbral.",
   "metrics": [
-    ["Tiempo real", "telemetría continua"],
+    ["99.9%", "disponibilidad operativa"],
     ["PM2.5 / PM10", "alertas por umbral"],
     ["PostGIS", "red georreferenciada"]
   ],

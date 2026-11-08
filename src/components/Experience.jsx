@@ -6,16 +6,16 @@ import {
     BriefcaseBusiness,
     CheckCircle2,
     Download,
-    FileText,
     GraduationCap,
     Receipt,
     ServerCog,
+    ShieldCheck,
     Sparkles,
 } from '../icons';
 
 const timeline = [
     {
-        date: 'Agosto 2026 – Presente',
+        date: 'Agosto 2025 – Presente',
         role: 'Desarrollador Full Stack (PHP/Laravel)',
         company: 'Pacifik — Cliente: Importadora Giorgio, Durban y Vergio',
         location: 'Concepción',
@@ -100,6 +100,13 @@ const certifications = [
         period: '2026',
         badge: 'Arquitectura Cloud',
     },
+];
+
+const engineeringPractices = [
+    'Despliegue continuo con pipelines CI/CD y control de versiones Git',
+    'Aseguramiento de calidad (QA), validación funcional y control interno',
+    'Arquitectura en la nube (Oracle OCI), contenedores Docker y Linux',
+    'Integración tributaria (DTE / Nubox) y bases de datos relacionales/espaciales',
 ];
 
 const Experience = () => {
@@ -221,7 +228,7 @@ const Experience = () => {
                         })}
                     </div>
 
-                    {/* ── Columna Derecha: Formación, Certificaciones & CV Card ── */}
+                    {/* ── Columna Derecha: Formación, Certificaciones & Prácticas de Ingeniería ── */}
                     <div className="space-y-5 lg:sticky lg:top-24">
                         <motion.aside
                             initial={{ opacity: 0, x: 20 }}
@@ -273,43 +280,38 @@ const Experience = () => {
                             </div>
                         </motion.aside>
 
-                        {/* Tarjeta de Descarga de CV */}
+                        {/* Tarjeta de Estándares de Ingeniería (sin botón de CV duplicado) */}
                         <motion.div
                             initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
                             viewport={{ once: true }}
                             onMouseMove={handleMouseMove}
-                            className="spotlight-card rounded-2xl border border-blue-500/25 bg-gradient-to-br from-blue-950/35 via-slate-900/70 to-slate-950 p-6"
+                            className="spotlight-card rounded-2xl border border-white/10 p-6"
                         >
                             <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-3">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">
-                                        <FileText className="w-5 h-5" />
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/25 flex items-center justify-center text-sky-400">
+                                        <ShieldCheck className="w-5 h-5" />
                                     </div>
                                     <div>
                                         <span className="text-[10px] font-black uppercase tracking-widest text-sky-400">
-                                            Versión Actualizada · PDF
+                                            Estándares de Trabajo
                                         </span>
                                         <h4 className="text-base font-black text-white">
-                                            Curriculum Vitae
+                                            Calidad, Despliegue y Nube
                                         </h4>
                                     </div>
                                 </div>
 
-                                <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                                    Detalle completo de experiencia en sistemas ERP (PHP/Laravel), facturación electrónica DTE y proyectos Full Stack.
-                                </p>
-
-                                <a
-                                    href="/cv/sergio-villena-cv.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-xs font-black uppercase tracking-widest text-slate-950 hover:bg-sky-50 hover:scale-[1.01] transition-all shadow-lg"
-                                >
-                                    <Download className="w-4 h-4" />
-                                    Ver / Descargar CV
-                                </a>
+                                <ul className="space-y-2">
+                                    {engineeringPractices.map((practice) => (
+                                        <li key={practice} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
+                                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                                            <span>{practice}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </motion.div>
                     </div>
