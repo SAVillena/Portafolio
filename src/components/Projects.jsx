@@ -1,53 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import * as Icons from '../icons';
 import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 
-/* ─── Slide/Fade Animation Variants ──────────────────────────────────────── */
-const slideVariants = {
-    enter: (direction) => ({
-        x: direction > 0 ? 60 : -60,
-        opacity: 0,
-        scale: 0.98,
-    }),
-    center: {
-        x: 0,
-        opacity: 1,
-        scale: 1,
-    },
-    exit: (direction) => ({
-        x: direction > 0 ? -60 : 60,
-        opacity: 0,
-        scale: 0.98,
-    }),
-};
-
-const slideTransition = {
-    x: { type: 'spring', stiffness: 320, damping: 30 },
-    opacity: { duration: 0.2 },
-    scale: { duration: 0.2 },
-};
-
 /* ─── usePreloadImages ──────────────────────────────────────────────────────
-   Precarga imágenes adyacentes (prev/next) en el caché del navegador.
+   Precarga todas las imágenes del proyecto en el caché del navegador
+   al abrir el modal o el visor de pantalla completa.
 ─────────────────────────────────────────────────────────────────────────── */
 const usePreloadImages = (images, currentIndex) => {
     useEffect(() => {
-        const preload = (src) => {
-            if (!src) return;
+        if (!images || images.length === 0) return;
+        images.forEach((item) => {
+            if (!item?.src) return;
             const img = new Image();
-            img.src = src;
-        };
-
-        const len = images.length;
-        if (len <= 1) return;
-
-        preload(images[(currentIndex + 1) % len].src);
-        preload(images[(currentIndex - 1 + len) % len].src);
-
-        if (len >= 3) {
-            preload(images[(currentIndex + 2) % len].src);
-        }
+            img.decoding = 'async';
+            img.src = item.src;
+        });
     }, [images, currentIndex]);
 };
 
@@ -100,24 +68,33 @@ const ImageStage = ({ src, alt, className = '', imageClassName = '', loading = '
 );
 
 /* ─── FullscreenLightbox ────────────────────────────────────────────────────
-   Visor de pantalla completa con navegación, zoom y soporte táctil.
+   Visor de pantalla completa sin bloqueos de AnimatePresence y con soporte
+   real de zoom + desplazamiento táctil (pinch-zoom y pan) en móvil y PC.
 ─────────────────────────────────────────────────────────────────────────── */
-const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
+const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate, onSelectIndex }) => {
     usePreloadImages(images, currentIndex);
     const [zoomed, setZoomed] = useState(false);
-    const [direction, setDirection] = useState(1);
-    const prevIndexRef = useRef(currentIndex);
 
-    useEffect(() => {
-        setDirection(currentIndex > prevIndexRef.current ? 1 : -1);
-        prevIndexRef.current = currentIndex;
-        setZoomed(false);
-    }, [currentIndex]);
+    const handleStep = useCallback(
+        (delta) => {
+            setZoomed(false);
+            onNavigate(delta);
+        },
+        [onNavigate]
+    );
+
+    const handleDirectSelect = useCallback(
+        (index) => {
+            setZoomed(false);
+            onSelectIndex(index);
+        },
+        [onSelectIndex]
+    );
 
     useKeyboardNavigation({
         onEscape: onClose,
-        onArrowLeft: () => onNavigate(-1),
-        onArrowRight: () => onNavigate(1),
+        onArrowLeft: () => handleStep(-1),
+        onArrowRight: () => handleStep(1),
     });
 
     useEffect(() => {
@@ -128,22 +105,10 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
         };
     }, []);
 
-    const handleDoubleClick = () => setZoomed((z) => !z);
-
-    const handleDragEnd = (e, { offset }) => {
-        if (offset.x < -45) {
-            onNavigate(1);
-        } else if (offset.x > 45) {
-            onNavigate(-1);
-        }
-    };
+    const activeSlide = images[currentIndex] || images[0];
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+        <div
             className="fixed inset-0 z-[70] flex flex-col bg-slate-950/95 backdrop-blur-2xl"
             role="dialog"
             aria-modal="true"
@@ -152,39 +117,59 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
         >
             {/* Top Bar del Lightbox */}
             <div
-                className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-slate-950/80 z-20"
+                className="flex items-center justify-between gap-2 px-3 sm:px-5 py-3 border-b border-white/10 bg-slate-950/95 z-30 shrink-0"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="flex items-center gap-3 min-w-0">
-                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs font-black text-white">
+                <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="rounded-lg bg-sky-500/15 border border-sky-400/30 px-2.5 py-1 text-xs font-black text-sky-300 shrink-0">
                         {currentIndex + 1} / {images.length}
                     </span>
                     <span className="truncate text-xs sm:text-sm font-bold text-slate-200">
-                        {images[currentIndex].label}
+                        {activeSlide.label}
                     </span>
                 </div>
 
-                <button
-                    type="button"
-                    onClick={onClose}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-xs font-black uppercase tracking-wider text-white transition hover:bg-white/20"
-                    aria-label="Cerrar visor"
-                >
-                    <span>Cerrar</span>
-                    <Icons.X className="h-4 w-4" />
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                    <button
+                        type="button"
+                        onClick={() => setZoomed((z) => !z)}
+                        className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-black uppercase tracking-wider transition ${
+                            zoomed
+                                ? 'border-sky-400 bg-sky-500/20 text-sky-300'
+                                : 'border-white/15 bg-white/10 text-white hover:bg-white/20'
+                        }`}
+                        aria-label={zoomed ? 'Reducir zoom' : 'Ampliar zoom'}
+                    >
+                        <Icons.Maximize2 className="h-3.5 w-3.5" />
+                        <span>{zoomed ? '100%' : 'Zoom +'}</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-xs font-black uppercase tracking-wider text-white transition hover:bg-white/20"
+                        aria-label="Cerrar visor"
+                    >
+                        <span>Cerrar</span>
+                        <Icons.X className="h-4 w-4" />
+                    </button>
+                </div>
             </div>
 
-            {/* Contenedor Central */}
-            <div className="relative flex-1 flex items-center justify-center overflow-hidden p-2 sm:p-6">
+            {/* Contenedor Central con soporte nativo de scroll/pan al hacer zoom en móvil y desktop */}
+            <div
+                className={`relative flex-1 overflow-auto p-2 sm:p-6 ${
+                    zoomed ? 'flex items-start justify-start sm:justify-center' : 'flex items-center justify-center'
+                }`}
+                onClick={onClose}
+            >
                 {images.length > 1 && (
                     <button
                         type="button"
                         onClick={(e) => {
                             e.stopPropagation();
-                            onNavigate(-1);
+                            handleStep(-1);
                         }}
-                        className="absolute left-2 sm:left-5 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/15 bg-slate-900/90 p-3 text-white shadow-xl backdrop-blur transition hover:bg-slate-800 active:scale-95"
+                        className="fixed left-2.5 sm:left-6 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-slate-900/95 p-3 sm:p-3.5 text-white shadow-2xl backdrop-blur transition hover:bg-slate-800 hover:border-sky-400/50 active:scale-95"
                         aria-label="Imagen anterior"
                     >
                         <Icons.ArrowLeft className="h-5 w-5" />
@@ -196,48 +181,65 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
                         type="button"
                         onClick={(e) => {
                             e.stopPropagation();
-                            onNavigate(1);
+                            handleStep(1);
                         }}
-                        className="absolute right-2 sm:right-5 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/15 bg-slate-900/90 p-3 text-white shadow-xl backdrop-blur transition hover:bg-slate-800 active:scale-95"
+                        className="fixed right-2.5 sm:right-6 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-slate-900/95 p-3 sm:p-3.5 text-white shadow-2xl backdrop-blur transition hover:bg-slate-800 hover:border-sky-400/50 active:scale-95"
                         aria-label="Imagen siguiente"
                     >
                         <Icons.ArrowRight className="h-5 w-5" />
                     </button>
                 )}
 
-                <AnimatePresence mode="wait" custom={direction}>
-                    <motion.div
-                        key={images[currentIndex].src}
-                        custom={direction}
-                        variants={slideVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={slideTransition}
-                        className="relative z-[5] flex items-center justify-center w-full h-full"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleDoubleClick();
-                        }}
-                    >
-                        <motion.img
-                            src={images[currentIndex].src}
-                            alt={images[currentIndex].label}
-                            animate={{ scale: zoomed ? 1.85 : 1 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                            drag={!zoomed ? 'x' : false}
-                            dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.7}
-                            onDragEnd={handleDragEnd}
-                            className={`max-h-[82vh] max-w-[94vw] select-none object-contain rounded-lg shadow-2xl ${
-                                zoomed ? 'cursor-zoom-out' : 'cursor-grab active:cursor-grabbing'
-                            }`}
-                            draggable={false}
-                        />
-                    </motion.div>
-                </AnimatePresence>
+                <div
+                    className={`relative z-10 flex items-center justify-center ${
+                        zoomed ? 'min-w-[175vw] sm:min-w-[135vw] p-4' : 'max-h-full max-w-full'
+                    }`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setZoomed((z) => !z);
+                    }}
+                >
+                    <img
+                        key={activeSlide.src}
+                        src={activeSlide.src}
+                        alt={activeSlide.label}
+                        loading="eager"
+                        decoding="sync"
+                        className={`rounded-xl border border-white/10 shadow-2xl transition-all duration-200 ${
+                            zoomed
+                                ? 'w-[175vw] sm:w-[135vw] max-w-none max-h-none cursor-zoom-out'
+                                : 'max-h-[76vh] max-w-[92vw] sm:max-w-[85vw] object-contain cursor-zoom-in'
+                        }`}
+                    />
+                </div>
             </div>
-        </motion.div>
+
+            {/* Barra Inferior de Vistas en Pantalla Completa */}
+            {images.length > 1 && (
+                <div
+                    className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto px-4 py-3 border-t border-white/10 bg-slate-950/95 z-30 shrink-0"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {images.map((img, idx) => {
+                        const isCurrent = idx === currentIndex;
+                        return (
+                            <button
+                                key={img.src}
+                                type="button"
+                                onClick={() => handleDirectSelect(idx)}
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+                                    isCurrent
+                                        ? 'bg-sky-500/20 border-sky-400 text-white shadow-lg'
+                                        : 'bg-slate-900/80 border-white/10 text-slate-400 hover:text-white hover:border-white/25'
+                                }`}
+                            >
+                                {idx + 1}. {img.label}
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
     );
 };
 
@@ -246,30 +248,15 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
 ─────────────────────────────────────────────────────────────────────────── */
 const ProjectModal = ({ project, onClose }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [direction, setDirection] = useState(1);
     const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxIndex, setLightboxIndex] = useState(0);
 
-    const activeImage = project.images[activeIndex];
+    const activeImage = project.images[activeIndex] || project.images[0];
 
     usePreloadImages(project.images, activeIndex);
 
     const navigateImage = useCallback(
         (delta) => {
-            setDirection(delta);
             setActiveIndex((prev) => {
-                const next = prev + delta;
-                if (next < 0) return project.images.length - 1;
-                if (next >= project.images.length) return 0;
-                return next;
-            });
-        },
-        [project.images.length]
-    );
-
-    const navigateLightbox = useCallback(
-        (delta) => {
-            setLightboxIndex((prev) => {
                 const next = prev + delta;
                 if (next < 0) return project.images.length - 1;
                 if (next >= project.images.length) return 0;
@@ -297,16 +284,8 @@ const ProjectModal = ({ project, onClose }) => {
     }, []);
 
     const openLightbox = (index) => {
-        setLightboxIndex(index);
+        setActiveIndex(index);
         setLightboxOpen(true);
-    };
-
-    const handleModalDragEnd = (e, { offset }) => {
-        if (offset.x < -45) {
-            navigateImage(1);
-        } else if (offset.x > 45) {
-            navigateImage(-1);
-        }
     };
 
     const handleRequestSimilar = () => {
@@ -418,33 +397,21 @@ const ProjectModal = ({ project, onClose }) => {
                         </div>
                     </div>
 
-                    {/* Escenario de Imagen Principal (Soporta Swipe táctil y Click para ampliar en Móvil y Desktop) */}
-                    <div className="relative flex-shrink-0 bg-slate-950 select-none">
+                    {/* Escenario de Imagen Principal (Click para ampliar y hacer zoom en Móvil y Desktop) */}
+                    <div className="relative flex-shrink-0 bg-slate-950">
                         <div className="h-[34vh] sm:h-[44vh] lg:h-[54vh] min-h-[240px] max-h-[540px] w-full relative overflow-hidden">
-                            <AnimatePresence mode="wait" custom={direction}>
-                                <motion.div
-                                    key={activeImage.src}
-                                    custom={direction}
-                                    variants={slideVariants}
-                                    initial="enter"
-                                    animate="center"
-                                    exit="exit"
-                                    transition={slideTransition}
-                                    drag={project.images.length > 1 ? 'x' : false}
-                                    dragConstraints={{ left: 0, right: 0 }}
-                                    dragElastic={0.5}
-                                    onDragEnd={handleModalDragEnd}
-                                    onClick={() => openLightbox(activeIndex)}
-                                    className="absolute inset-0 cursor-zoom-in"
-                                >
-                                    <ImageStage
-                                        src={activeImage.src}
-                                        alt={activeImage.label}
-                                        className="h-full w-full p-2.5 sm:p-5"
-                                        imageClassName="border border-white/10"
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
+                            <div
+                                key={activeImage.src}
+                                onClick={() => openLightbox(activeIndex)}
+                                className="absolute inset-0 cursor-zoom-in transition-opacity duration-200"
+                            >
+                                <ImageStage
+                                    src={activeImage.src}
+                                    alt={activeImage.label}
+                                    className="h-full w-full p-2.5 sm:p-5"
+                                    imageClassName="border border-white/10"
+                                />
+                            </div>
                         </div>
 
                         {/* Flechas laterales siempre visibles en móvil y desktop */}
@@ -478,10 +445,7 @@ const ProjectModal = ({ project, onClose }) => {
                                 <button
                                     key={image.src}
                                     type="button"
-                                    onClick={() => {
-                                        setDirection(idx > activeIndex ? 1 : -1);
-                                        setActiveIndex(idx);
-                                    }}
+                                    onClick={() => setActiveIndex(idx)}
                                     aria-label={`Ver captura: ${image.label}`}
                                     aria-pressed={isSelected}
                                     className={`w-36 sm:w-auto shrink-0 snap-start overflow-hidden rounded-xl border text-left transition-all ${
@@ -632,16 +596,15 @@ const ProjectModal = ({ project, onClose }) => {
                 </div>
             </motion.div>
 
-            <AnimatePresence>
-                {lightboxOpen && (
-                    <FullscreenLightbox
-                        images={project.images}
-                        currentIndex={lightboxIndex}
-                        onClose={() => setLightboxOpen(false)}
-                        onNavigate={navigateLightbox}
-                    />
-                )}
-            </AnimatePresence>
+            {lightboxOpen && (
+                <FullscreenLightbox
+                    images={project.images}
+                    currentIndex={activeIndex}
+                    onClose={() => setLightboxOpen(false)}
+                    onNavigate={navigateImage}
+                    onSelectIndex={setActiveIndex}
+                />
+            )}
         </motion.div>
     );
 };
