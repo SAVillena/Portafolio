@@ -1,0 +1,107 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper,top=1.3cm,bottom=1.4cm,left=1.6cm,right=1.6cm]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amssymb}
+\usepackage{needspace}
+
+\definecolor{azul}{RGB}{15,45,95}
+\pagestyle{plain}
+\setlength{\parindent}{0pt}
+
+\titleformat{\section}{\Large\bfseries\color{azul}}{}{0pt}{\MakeUppercase}[\vspace{-10pt}{\color{azul}\rule{\linewidth}{1pt}}]
+\titlespacing*{\section}{0pt}{10pt}{2pt}
+
+\setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=2pt,parsep=0pt,label={\tiny$\blacksquare$}}
+
+\newcommand{\cargo}[4]{\needspace{5\baselineskip}%
+  \textbf{#1}\hfill\textbf{#2}\\
+  \textit{#3}\hfill\textit{#4}\vspace{-2pt}}
+
+\begin{document}
+
+\begin{center}
+  {\fontsize{24}{28}\selectfont\bfseries SERGIO ALEXIS VILLENA VERGARA}\\[3pt]
+  {\Large\bfseries\color{azul} Backend Developer (PHP/Laravel) --- ERP \& Facturación Electrónica}\\[4pt]
+  \small
+  \faMapMarker*\ Concepción, Chile \quad --- \quad
+  \faEnvelope\ \href{mailto:sergio.villena.vergara@gmail.com}{\color{azul}sergio.villena.vergara@gmail.com} \quad --- \quad
+  \faPhone\ +56 9 3427 1281\\
+  \faLinkedin\ \href{https://www.linkedin.com/in/sergio-villena-vergara}{\color{azul}LinkedIn} \quad --- \quad
+  \faGlobe\ \href{https://sergiovillena.vercel.app/}{\color{azul}Portafolio de Proyectos}
+\end{center}
+
+\section{Perfil Profesional}
+Ingeniero Civil en Informática especializado en desarrollo backend con PHP/Laravel sobre sistemas ERP, con foco en procesos contables y facturación electrónica. Experiencia desarrollando módulos de contabilidad y libro mayor, gestionando documentos tributarios electrónicos (DTE) e integrando sistemas con plataformas contables como Nubox, además de personalizar módulos en Odoo. Trayectoria en automatización y digitalización de procesos de negocio, modelado de datos y optimización de consultas SQL, complementada con experiencia en Java, Node.js, Docker y nube (OCI). Orientado a traducir necesidades operativas y contables en soluciones de software confiables y mantenibles.
+
+\section{Habilidades Técnicas}
+\begin{itemize}
+  \item \textbf{ERP \& Contabilidad:} Facturación electrónica (DTE: facturas y boletas), contabilidad y libro mayor, integración con Nubox, desarrollo de módulos Odoo, control interno.
+  \item \textbf{Backend:} PHP 8+, Laravel, APIs REST, Java (Spring Boot), Node.js, Express, Python.
+  \item \textbf{Bases de Datos:} MySQL, PostgreSQL, PostGIS, modelado relacional, optimización SQL, procesos ETL.
+  \item \textbf{Automatización \& Infraestructura:} n8n, Docker, Linux, Shell Scripting, Oracle Cloud Infrastructure (OCI).
+  \item \textbf{Herramientas \& Metodologías:} Git, SCRUM, Arquitectura Limpia, Claude Code, LLMs.
+\end{itemize}
+
+\section{Experiencia Profesional}
+
+\cargo{Desarrollador Full Stack (PHP/Laravel)}{Agosto 2026 -- Presente}{Pacifik --- Cliente: Importadora Giorgio, Durban y Vergio}{Concepción}
+\begin{itemize}
+  \item \textbf{Automatización y Digitalización de Procesos:} Desarrollo de nuevos módulos sobre el ERP en Laravel del cliente, integrado con las bases de datos de Lanix, automatizando y digitalizando procesos operativos, financieros y contables del negocio.
+  \item \textbf{Contabilidad y Documentos Tributarios Electrónicos (DTE):} Desarrollo sobre los módulos de contabilidad y libro mayor, con gestión de DTE (facturas y boletas) e integración con la plataforma contable Nubox.
+  \item \textbf{Control Interno e Integraciones:} Implementación de flujos de control interno y de integración de datos con plataformas externas, mejorando la trazabilidad de las operaciones.
+  \item \textbf{Mantenimiento de Aplicativos:} Mantenimientos evolutivos, correctivos, perfectivos y adaptativos sobre los sistemas del cliente, además del levantamiento de nuevas aplicaciones.
+\end{itemize}
+
+\vspace{4pt}
+\cargo{Ingeniero de Software y Automatización (Freelance)}{Marzo 2025 -- Presente}{Consultoría y Desarrollo de Soluciones Tecnológicas}{Concepción}
+\begin{itemize}
+  \item \textbf{Módulos ERP en Odoo:} Desarrollo y personalización de módulos a medida en Odoo, adaptando el ERP a procesos operativos y contables.
+  \item \textbf{Automatización de Datos Operativos:} Reingeniería del flujo de ingesta y procesamiento de datos operativos con \textbf{n8n} en el rubro transporte y logística, con pipelines de reportes de estado que redujeron la carga operativa manual en un \textbf{40\,\%}.
+  \item \textbf{Desarrollo Web y SEO:} Desarrollo de sitio web corporativo y estrategia SEO (investigación de palabras clave, análisis de rankings y auditoría técnica) para aumentar la visibilidad en buscadores.
+  \item \textbf{Plataformas Full Stack:} Construcción de aplicaciones con arquitectura desacoplada (React + Spring Boot) y autenticación JWT.
+\end{itemize}
+
+\vspace{4pt}
+\cargo{Ingeniero de Software y Encargado de TI}{Dic 2024 -- Mar 2025}{INNTECH}{Concepción}
+\begin{itemize}
+  \item \textbf{Sistema de Información Geográfica:} Coordiné la puesta en marcha de un sistema GIS para el monitoreo y procesamiento de datos en tiempo real de infraestructura energética (oleoductos).
+  \item \textbf{Continuidad Operativa:} Supervisé la consistencia y disponibilidad de los flujos de comunicación y datos en terreno, manteniendo un \textbf{99.9\,\% de disponibilidad} bajo plazos estrictos.
+\end{itemize}
+
+\vspace{4pt}
+\cargo{Desarrollador Full Stack (Proyecto de Título)}{Marzo 2024 -- Nov 2024}{INNTECH}{Concepción}
+\begin{itemize}
+  \item \textbf{Monitoreo Ambiental Minero:} Diseñé y desarrollé una plataforma de ingesta y visualización en tiempo real de calidad del aire (PM2.5 y PM10) con el stack PERN (PostgreSQL, Express, React, Node.js) y PostGIS.
+\end{itemize}
+
+\vspace{4pt}
+\cargo{Ingeniero de Virtualización y Monitoreo}{Nov 2023 -- Feb 2024}{Mundo OyM}{Concepción}
+\begin{itemize}
+  \item \textbf{Monitoreo de Infraestructura:} Integré la API de Proxmox VE para supervisar métricas de un clúster de \textbf{+200 máquinas virtuales}, automatizando reportes y eliminando inspecciones manuales.
+\end{itemize}
+
+\section{Proyectos}
+\textbf{Solidarity Map} --- \textit{Plataforma GIS de gestión logística en emergencias}\hfill\textbf{2026}
+\begin{itemize}
+  \item Diseñé de forma autónoma una aplicación en Java (Spring Boot) y PostgreSQL/PostGIS para georreferenciar y mapear centros de asistencia.
+\end{itemize}
+
+\section{Formación y Certificaciones}
+\begin{itemize}
+  \item \textbf{Ingeniería Civil en Informática} --- Universidad del Bío-Bío \hfill 2020 -- 2024
+  \item \textbf{Especialización Backend Developer} --- Oracle Next Education (ONE) \hfill 2026
+  \item \textbf{Certificación Oracle Cloud Infrastructure (OCI): Fundamentos Clave} --- Alura LATAM \hfill 2026
+\end{itemize}
+
+\section{Idiomas}
+\textbf{Español:} Nativo \quad --- \quad \textbf{Inglés:} B2 técnico (lectura fluida de documentación técnica).
+
+\end{document}
+

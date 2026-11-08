@@ -62,6 +62,21 @@ const accentMap = {
     teal: 'border-teal-500/40 text-teal-300 bg-slate-950/80 backdrop-blur-md',
 };
 
+const spotlightByAccent = {
+    rose: 'rgba(244, 63, 94, 0.14)',
+    amber: 'rgba(245, 158, 11, 0.14)',
+    blue: 'rgba(59, 130, 246, 0.15)',
+    emerald: 'rgba(16, 185, 129, 0.14)',
+    teal: 'rgba(20, 184, 166, 0.14)',
+};
+
+const projectCategories = [
+    { id: 'all', label: 'Todos los Casos (5)' },
+    { id: 'ia-web', label: 'IA, Automatización & Web', match: ['gruas-ams', 'peluqueria'] },
+    { id: 'gis', label: 'GIS & Telemetría (PostGIS)', match: ['solidarity-map', 'dustsense'] },
+    { id: 'laravel-infra', label: 'PHP/Laravel & Infraestructura', match: ['proxmox'] },
+];
+
 /* ─── ImageFrame ────────────────────────────────────────────────────────────
    Contenedor de imagen con fondo blur decorativo.
 ─────────────────────────────────────────────────────────────────────────── */
@@ -116,7 +131,7 @@ const FullscreenLightbox = ({ images, currentIndex, onClose, onNavigate }) => {
 
     const handleDoubleClick = () => setZoomed((z) => !z);
 
-    const handleDragEnd = (e, { offset, velocity }) => {
+    const handleDragEnd = (e, { offset }) => {
         const swipe = offset.x;
         if (swipe < -50) {
             onNavigate(1);
@@ -274,6 +289,19 @@ const ProjectModal = ({ project, onClose }) => {
         setLightboxOpen(true);
     };
 
+    const handleRequestSimilar = () => {
+        onClose();
+        window.dispatchEvent(
+            new CustomEvent('select-contact-topic', {
+                detail: `Consulta sobre solución similar a ${project.title}`,
+            })
+        );
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+            contactEl.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     const Icon = Icons[project.icon] || Icons.Bot;
 
     return (
@@ -296,7 +324,7 @@ const ProjectModal = ({ project, onClose }) => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 24, scale: 0.98 }}
                 transition={{ duration: 0.25 }}
-                className="relative z-10 w-full max-w-7xl max-h-[92vh] overflow-y-auto lg:overflow-hidden rounded-xl border border-white/10 bg-slate-950 shadow-2xl
+                className="relative z-10 w-full max-w-7xl max-h-[92vh] overflow-y-auto lg:overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl
                            flex flex-col lg:grid lg:grid-cols-[minmax(0,1.3fr)_minmax(360px,0.85fr)]"
                 onClick={(e) => e.stopPropagation()}
             >
@@ -501,6 +529,15 @@ const ProjectModal = ({ project, onClose }) => {
                                     {project.noLinksNote ?? 'Repo privado / información sensible'}
                                 </span>
                               )}
+
+                        <button
+                            type="button"
+                            onClick={handleRequestSimilar}
+                            className="inline-flex items-center gap-2 rounded-lg border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-bold text-sky-300 transition hover:bg-sky-500/20"
+                        >
+                            <Icons.Send className="h-3.5 w-3.5" />
+                            Cotizar sistema similar
+                        </button>
                     </div>
                 </div>
             </motion.div>
@@ -523,24 +560,40 @@ const ProjectModal = ({ project, onClose }) => {
 /* ─── ProjectCard ───────────────────────────────────────────────────────────
    Tarjeta de proyecto en la lista.
 ─────────────────────────────────────────────────────────────────────────── */
-const ProjectCard = ({ project, onOpen }) => {
+const ProjectCard = ({ project, onOpen, isFiltered }) => {
     const Icon = Icons[project.icon] || Icons.Bot;
+    const isFeaturedSpan = project.featured && !isFiltered;
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        e.currentTarget.style.setProperty(
+            '--spotlight-color',
+            spotlightByAccent[project.accent] || 'rgba(59, 130, 246, 0.14)'
+        );
+    };
 
     return (
         <motion.article
             layout
-            className={`group overflow-hidden rounded-xl border border-white/10 bg-slate-900/35 transition hover:border-white/25 ${
-                project.featured ? 'lg:col-span-2' : ''
+            initial={{ opacity: 0, scale: 0.96, y: 18 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: -12 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            onMouseMove={handleMouseMove}
+            className={`spotlight-card group rounded-2xl border border-white/10 ${
+                isFeaturedSpan ? 'lg:col-span-2' : ''
             }`}
         >
-            <div className={`flex flex-col ${project.featured ? 'lg:grid lg:grid-cols-[1.1fr_0.9fr]' : ''}`}>
+            <div className={`relative z-10 flex flex-col h-full ${isFeaturedSpan ? 'lg:grid lg:grid-cols-[1.1fr_0.9fr]' : ''}`}>
                 {/* ── Bloque imagen ── */}
-                <div className="relative overflow-hidden bg-slate-900 flex-shrink-0">
+                <div className="relative overflow-hidden bg-slate-900 flex-shrink-0 cursor-pointer" onClick={() => onOpen(project)}>
                     <ImageFrame
                         src={project.cover}
                         alt={project.title}
-                        className={project.featured ? 'h-56 sm:h-72 lg:h-full lg:min-h-[380px]' : 'h-52 sm:h-64'}
-                        imageClassName="transition duration-500 group-hover:scale-[1.03]"
+                        className={isFeaturedSpan ? 'h-56 sm:h-72 lg:h-full lg:min-h-[380px]' : 'h-52 sm:h-64'}
+                        imageClassName="transition duration-500 group-hover:scale-[1.04]"
                         loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
@@ -548,21 +601,26 @@ const ProjectCard = ({ project, onOpen }) => {
                         <Icon className="h-3.5 w-3.5" />
                         {project.type}
                     </div>
+                    <div className="absolute right-4 bottom-3 z-20 rounded-lg bg-slate-950/75 px-2.5 py-1 text-[10px] font-bold text-slate-300 backdrop-blur opacity-0 group-hover:opacity-100 transition-opacity">
+                        {project.images.length} capturas · Click para explorar
+                    </div>
                 </div>
 
                 {/* ── Bloque texto ── */}
-                <div className="flex flex-col p-5 sm:p-7 bg-slate-900/35">
+                <div className="flex flex-col flex-1 p-5 sm:p-7">
                     <div className="mb-5 flex items-start justify-between gap-4">
                         <div>
                             <p className="mb-2 text-xs font-black uppercase tracking-widest text-slate-500">{project.status}</p>
-                            <h3 className="text-2xl font-black tracking-tight text-white">{project.title}</h3>
+                            <h3 className="text-2xl font-black tracking-tight text-white group-hover:text-sky-300 transition-colors">
+                                {project.title}
+                            </h3>
                             <p className="mt-2 text-sm leading-relaxed text-slate-400">{project.subtitle}</p>
                         </div>
                     </div>
 
                     <div className="mb-6 grid grid-cols-2 gap-2">
-                        {project.metrics.slice(0, project.featured ? 4 : 2).map(([value, label]) => (
-                            <div key={`${project.id}-${value}-${label}`} className="rounded-lg bg-white/[0.04] p-3">
+                        {project.metrics.slice(0, isFeaturedSpan ? 4 : 2).map(([value, label]) => (
+                            <div key={`${project.id}-${value}-${label}`} className="rounded-xl border border-white/[0.05] bg-white/[0.03] p-3">
                                 <p className="text-lg font-black text-white">{value}</p>
                                 <p className="text-[10px] font-semibold uppercase leading-snug tracking-wider text-slate-500">{label}</p>
                             </div>
@@ -571,8 +629,8 @@ const ProjectCard = ({ project, onOpen }) => {
 
                     <p className="mb-6 text-sm leading-relaxed text-slate-400">{project.solution}</p>
 
-                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex flex-wrap gap-2">
+                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/[0.06]">
+                        <div className="flex flex-wrap gap-1.5">
                             {project.stack.slice(0, 5).map((tech) => (
                                 <span key={tech} className="rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">
                                     {tech}
@@ -583,7 +641,7 @@ const ProjectCard = ({ project, onOpen }) => {
                             type="button"
                             onClick={() => onOpen(project)}
                             aria-label={`Ver caso completo: ${project.title}`}
-                            className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-950 transition hover:scale-[1.02] active:scale-100"
+                            className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-950 transition hover:scale-[1.03] hover:bg-sky-50 active:scale-100"
                         >
                             Ver caso
                             <Icons.ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -598,33 +656,44 @@ const ProjectCard = ({ project, onOpen }) => {
 /* ─── Projects (sección) ──────────────────────────────────────────────────── */
 const Projects = ({ projects }) => {
     const [selectedProject, setSelectedProject] = useState(null);
+    const [activeCategory, setActiveCategory] = useState('all');
+
+    const filteredProjects =
+        activeCategory === 'all'
+            ? projects
+            : projects.filter((p) => {
+                  const cat = projectCategories.find((c) => c.id === activeCategory);
+                  return cat && cat.match && cat.match.includes(p.id);
+              });
 
     return (
-        <section id="proyectos" className="py-28 bg-slate-900/10">
+        <section id="proyectos" className="py-28 bg-slate-900/15 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
+                    className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
                 >
-                    <div className="max-w-3xl">
-                        <p className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-blue-400">Trabajo probado</p>
+                    <div className="max-w-2xl">
+                        <p className="mb-2.5 text-xs font-black uppercase tracking-[0.24em] text-blue-400">
+                            Casos Reales
+                        </p>
                         <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                            Proyectos con sistema, contexto e impacto.
+                            Proyectos con <span className="title-frame">impacto medible</span>
                         </h2>
-                        <p className="mt-4 text-lg leading-relaxed text-slate-400">
-                            Una selección de productos reales y prototipos funcionales: automatización con IA, reservas, GIS, monitoreo ambiental e infraestructura virtualizada.
+                        <p className="mt-3 text-base leading-relaxed text-slate-400">
+                            Sistemas en producción y arquitecturas completas: plataformas web, reservas online, monitoreo geoespacial (GIS) e infraestructura en Laravel.
                         </p>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="grid grid-cols-3 gap-3 text-center shrink-0">
                         {[
-                            ['5', 'casos'],
-                            ['3', 'entornos reales'],
+                            ['5', 'casos reales'],
+                            ['100%', 'arquitectura propia'],
                             ['0', 'placeholders'],
                         ].map(([value, label]) => (
-                            <div key={label} className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3">
+                            <div key={label} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
                                 <p className="text-2xl font-black text-white">{value}</p>
                                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{label}</p>
                             </div>
@@ -632,11 +701,40 @@ const Projects = ({ projects }) => {
                     </div>
                 </motion.div>
 
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    {projects && projects.map((project) => (
-                        <ProjectCard key={project.id} project={project} onOpen={setSelectedProject} />
-                    ))}
+                {/* ── Filtros de Categoría ── */}
+                <div className="flex flex-wrap items-center gap-2 mb-10">
+                    {projectCategories.map((cat) => {
+                        const isActive = activeCategory === cat.id;
+                        return (
+                            <button
+                                key={cat.id}
+                                type="button"
+                                onClick={() => setActiveCategory(cat.id)}
+                                className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                                    isActive
+                                        ? 'bg-white text-slate-950 shadow-lg shadow-blue-500/15'
+                                        : 'bg-slate-900/60 text-slate-400 border border-white/10 hover:text-white hover:border-white/25'
+                                }`}
+                            >
+                                {cat.label}
+                            </button>
+                        );
+                    })}
                 </div>
+
+                <motion.div layout className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects &&
+                            filteredProjects.map((project) => (
+                                <ProjectCard
+                                    key={project.id}
+                                    project={project}
+                                    onOpen={setSelectedProject}
+                                    isFiltered={activeCategory !== 'all'}
+                                />
+                            ))}
+                    </AnimatePresence>
+                </motion.div>
             </div>
 
             <AnimatePresence>

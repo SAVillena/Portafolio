@@ -11,7 +11,7 @@ interface Props {
 
 const {
 	title,
-	description = "Portafolio de Sergio Villena: Ingeniero Civil en Informática con experiencia en desarrollo full-stack, automatización con IA, sistemas GIS e infraestructura crítica.",
+	description = "Portafolio de Sergio Villena: Ingeniero Civil en Informática especializado en desarrollo Backend y Full Stack (PHP/Laravel, Java Spring Boot, React), sistemas ERP, facturación electrónica DTE y plataformas GIS.",
 	image = "/og-image.webp",
 	url = Astro.url.href,
 } = Astro.props;
@@ -26,7 +26,7 @@ const jsonLd = {
   "name": "Sergio Villena",
   "url": canonicalUrl,
   "email": "sergio.villena.vergara@gmail.com",
-  "jobTitle": "Ingeniero Civil en Informática",
+  "jobTitle": "Ingeniero Civil en Informática | Backend & Full Stack Developer (PHP/Laravel, ERP & Software)",
   "description": description,
   "image": ogImage,
   "sameAs": [
@@ -34,10 +34,10 @@ const jsonLd = {
     "https://www.linkedin.com/in/sergio-villena-vergara/"
   ],
   "knowsAbout": [
-    "React", "Next.js", "Astro", "Node.js", "Express",
-    "PostgreSQL", "PostGIS", "Docker", "Proxmox",
-    "n8n", "OpenAI API", "Automatización con IA",
-    "Sistemas GIS", "Infraestructura virtualizada"
+    "PHP", "Laravel", "Sistemas ERP", "Facturación Electrónica DTE", "Nubox",
+    "Java", "Spring Boot", "React", "Next.js", "Astro", "Node.js", "Express",
+    "PostgreSQL", "PostGIS", "MySQL", "Docker", "Proxmox VE", "Oracle Cloud Infrastructure (OCI)",
+    "Sistemas GIS"
   ]
 };
 ---
@@ -53,7 +53,7 @@ const jsonLd = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="author" content="Sergio Villena" />
-		<meta name="keywords" content="Sergio Villena, Ingeniero Informática, Full Stack, IA, n8n, React, Next.js, GIS, PostGIS, Docker, Proxmox, Chile, Portafolio" />
+		<meta name="keywords" content="Sergio Villena, Ingeniero Civil en Informática, PHP, Laravel, ERP, Facturación Electrónica, DTE, Nubox, Odoo, Full Stack, IA, n8n, React, Spring Boot, GIS, PostGIS, Concepción, Chile, Servicios Informáticos" />
 
 		<!-- Canonical -->
 		<link rel="canonical" href={canonicalUrl} />

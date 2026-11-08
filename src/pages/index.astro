@@ -3,31 +3,35 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import Services from '../components/Services';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Experience from '../components/Experience';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import QuickBar from '../components/QuickBar';
 
 const allProjects = await getCollection('projects');
 const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order).map(p => p.data);
 ---
 
-<Layout title="Sergio Villena | Full Stack, IA y Sistemas Geoespaciales">
+<Layout title="Sergio Villena | Ingeniero Civil en Informática · ERP, Full Stack, IA y Servicios TI">
   <main class="grid-pattern min-h-screen text-slate-200 selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden">
     <div class="mesh-gradient"></div>
-    
+
     <!-- Hydrate on idle: UI renders instantly via SSR, interactivity loads automatically in the background -->
     <Navbar client:idle />
-    
-    <!-- Hero now uses CSS animations, so JS (gsap for magnetic effect) can load on idle -->
+
+    <!-- Hero with interactive audience switcher (Recruiter vs IT Client) -->
     <Hero client:idle />
-    
-    <!-- client:visible: hydrate only when the component enters the viewport (best for unused JS reduction) -->
+
+    <!-- client:visible: hydrate when entering viewport -->
+    <Services client:visible />
     <Skills client:visible />
     <Projects client:visible projects={sortedProjects} />
     <Experience client:visible />
     <Contact client:visible />
     <Footer client:visible />
+    <QuickBar client:idle />
   </main>
 </Layout>

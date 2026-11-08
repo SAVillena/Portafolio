@@ -12,8 +12,11 @@ body {
 }
 
 .grid-pattern {
-  background-image: radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.07) 1px, transparent 0);
-  background-size: 32px 32px;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.08) 1px, transparent 0),
+    linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 32px 32px, 128px 128px, 128px 128px;
 }
 
 .mesh-gradient {
@@ -23,35 +26,155 @@ body {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.2) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(30, 64, 175, 0.2) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.22) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(30, 64, 175, 0.20) 0px, transparent 50%);
   z-index: -1;
   pointer-events: none;
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
   border-color: rgba(59, 130, 246, 0.4);
-  transform: translateY(-8px);
-  background: rgba(15, 23, 42, 0.6);
+  transform: translateY(-6px);
+  background: rgba(15, 23, 42, 0.65);
+  box-shadow: 0 24px 48px -12px rgba(2, 6, 23, 0.7), 0 0 28px -8px rgba(59, 130, 246, 0.2);
+}
+
+/* ─── Interactive Spotlight Card ─── */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.4s ease;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    520px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--spotlight-color, rgba(59, 130, 246, 0.13)),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.spotlight-card:hover {
+  border-color: rgba(59, 130, 246, 0.38);
+  transform: translateY(-5px);
+  box-shadow:
+    0 24px 50px -12px rgba(2, 6, 23, 0.75),
+    0 0 32px -10px rgba(59, 130, 246, 0.22);
+}
+
+/* ─── Architectural Editorial Title Accents (Sin Degradados de Texto) ─── */
+.title-frame {
+  position: relative;
+  display: inline-block;
+  padding: 0.04em 0.32em;
+  margin: 0 0.06em;
+  background: rgba(14, 165, 233, 0.10);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 0.35em;
+  color: #38bdf8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 24px -6px rgba(14, 165, 233, 0.25);
+}
+
+.title-accent-line {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.title-accent-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.04em;
+  height: 0.12em;
+  background: #38bdf8;
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+/* ─── HUD Blueprint Corner Accents ─── */
+.hud-frame {
+  position: relative;
+}
+
+.hud-corner-tl,
+.hud-corner-tr,
+.hud-corner-bl,
+.hud-corner-br {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 20;
+  transition: all 0.35s ease;
+}
+
+.hud-corner-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-left: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-top-left-radius: 4px;
+}
+
+.hud-corner-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-right: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-top-right-radius: 4px;
+}
+
+.hud-corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-left: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-bottom-left-radius: 4px;
+}
+
+.hud-corner-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-right: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-bottom-right-radius: 4px;
 }
 
 .badge-premium {
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  color: #7dd3fc;
 }
 
 @keyframes scan {
-  0% { top: 0%; }
-  100% { top: 100%; }
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 .scanner::after {
@@ -59,17 +182,34 @@ body {
   position: absolute;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, transparent, #3b82f6, transparent);
+  background: linear-gradient(to right, transparent, #38bdf8, transparent);
   top: 0;
   left: 0;
-  animation: scan 4s linear infinite;
-  box-shadow: 0 0 15px #3b82f6;
+  animation: scan 4.5s ease-in-out infinite;
+  box-shadow: 0 0 15px #38bdf8;
+  pointer-events: none;
 }
 
-.text-gradient {
-  background: linear-gradient(to bottom right, #fff 30%, #94a3b8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-slow 4.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes data-pulse {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-data-stream {
+  animation: data-pulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 /* Modal scroll – oculta scrollbar en Webkit y contiene el overscroll en mobile */
@@ -96,4 +236,13 @@ body {
 
 .glow-dot {
   animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-delayed,
+  .animate-data-stream,
+  .scanner::after {
+    animation: none !important;
+  }
 }
