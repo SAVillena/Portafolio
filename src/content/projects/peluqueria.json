@@ -2,27 +2,28 @@
   "order": 2,
   "id": "peluqueria",
   "title": "Sistema de Reservas Premium",
-  "subtitle": "Agenda digital, catálogo y panel autogestionable para peluquería",
+  "subtitle": "Agenda digital, catálogo y panel autogestionable",
   "type": "Freelance",
-  "status": "Demo / próxima puesta en marcha",
-  "role": "Desarrollador full-stack: arquitectura, diseño UI/UX y desarrollo",
+  "status": "Demo Funcional",
+  "role": "Desarrollador Full Stack — Arquitectura PERN, UI/UX y panel de control",
   "icon": "Sparkles",
   "accent": "amber",
-  "cover": "/projects/peluqueria/peluqueria-card.webp",
+  "cover": "/projects/peluqueria/peluqueria-hero.webp",
   "images": [
-    { "src": "/projects/peluqueria/peluqueria-hero.webp", "label": "Sitio público" },
-    { "src": "/projects/peluqueria/peluqueria-booking.webp", "label": "Reserva online" },
-    { "src": "/projects/peluqueria/peluqueria-confirmation.webp", "label": "Confirmación y WhatsApp" },
+    { "src": "/projects/peluqueria/peluqueria-hero.webp", "label": "Sitio público (Hero)" },
+    { "src": "/projects/peluqueria/peluqueria-booking.webp", "label": "Catálogo de servicios" },
+    { "src": "/projects/peluqueria/peluqueria-services.webp", "label": "Formulario de reserva online" },
+    { "src": "/projects/peluqueria/peluqueria-confirmation.webp", "label": "Comprobante y WhatsApp (Móvil)" },
     { "src": "/projects/peluqueria/peluqueria-dashboard.webp", "label": "Panel administrativo" }
   ],
-  "problem": "La coordinación manual generaba cruces de horarios, exceso de mensajes y una experiencia poco clara para mostrar servicios, precios y disponibilidad.",
-  "solution": "Plataforma PERN con reserva online, validación de disponibilidad, confirmación de hora, catálogo administrable e imágenes gestionadas en Cloudinary.",
+  "problem": "La coordinación manual generaba cruces de horarios, exceso de mensajes y falta de visibilidad clara de servicios, precios y disponibilidad en tiempo real.",
+  "solution": "Plataforma PERN con reserva online, validación de bloques horarios, comprobante instantáneo para WhatsApp, catálogo administrable e imágenes en Cloudinary.",
   "metrics": [
     ["100%", "agendamiento online"],
     ["0%", "cruces de horario"],
-    ["inmediato", "edición de precios"]
+    ["Inmediato", "control de catálogo"]
   ],
-  "stack": ["React 19", "Vite", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "Prisma ORM", "Cloudinary", "JWT", "Bcrypt"],
+  "stack": ["React 19", "Node.js", "Express", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "Cloudinary", "JWT"],
   "links": [],
-  "noLinksNote": "Proyecto para cliente — código no publicado aún"
+  "noLinksNote": "Proyecto para cliente — código privado"
 }

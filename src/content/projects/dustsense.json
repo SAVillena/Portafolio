@@ -4,23 +4,23 @@
   "title": "DustSense",
   "subtitle": "Monitoreo ambiental geoespacial para minería",
   "type": "Empresa · INNTECH",
-  "status": "Privado / producción interna",
+  "status": "Producción Interna",
   "role": "Ingeniero de Software y Encargado de TI",
   "icon": "Activity",
   "accent": "emerald",
-  "cover": "/projects/dustsense/dustsense-card.webp",
+  "cover": "/projects/dustsense/dustsense-monitoring-map.webp",
   "images": [
-    { "src": "/projects/dustsense/dustsense-alerts.webp", "label": "Panel de alertas" },
-    { "src": "/projects/dustsense/dustsense-monitoring-map.webp", "label": "Mapa geoespacial" },
-    { "src": "/projects/dustsense/dustsense-charts.webp", "label": "Gráficos de series temporales" }
+    { "src": "/projects/dustsense/dustsense-monitoring-map.webp", "label": "Mapa geoespacial en tiempo real" },
+    { "src": "/projects/dustsense/dustsense-alerts.webp", "label": "Panel de alertas PM2.5 y PM10" },
+    { "src": "/projects/dustsense/dustsense-charts.webp", "label": "Gráficos y series temporales" }
   ],
-  "problem": "La faena necesitaba centralizar telemetría ambiental para medir, mapear y monitorear concentraciones de polvo PM2.5 y PM10 en tiempo real.",
-  "solution": "Arquitectura PERN con PostGIS para capturar flujos de sensores, espacializar datos, visualizar métricas críticas y activar alertas tempranas.",
+  "problem": "La operación minera necesitaba centralizar telemetría ambiental para medir, mapear y alertar concentraciones críticas de material particulado PM2.5 y PM10 en tiempo real.",
+  "solution": "Plataforma PERN con PostGIS para ingesta continua de sensores, visualización territorial interactiva, series históricas y alertas por umbral.",
   "metrics": [
-    ["tiempo real", "telemetría ambiental"],
-    ["PM2.5 / PM10", "umbrales críticos"],
-    ["PostGIS", "datos geoespaciales"]
+    ["Tiempo real", "telemetría continua"],
+    ["PM2.5 / PM10", "alertas por umbral"],
+    ["PostGIS", "red georreferenciada"]
   ],
-  "stack": ["PostgreSQL", "Express", "React", "Node.js", "PostGIS", "Datos georreferenciados"],
-  "links": [{ "label": "Uso privado", "icon": "Lock" }]
+  "stack": ["PostgreSQL", "PostGIS", "Express", "React", "Node.js", "Telemetría IoT"],
+  "links": [{ "label": "Uso privado empresarial", "icon": "Lock" }]
 }
