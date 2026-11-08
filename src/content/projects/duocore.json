@@ -1,0 +1,40 @@
+{
+  "order": 2,
+  "id": "duocore",
+  "title": "DuoCore · Cloud, CI/CD & Tiempo Real",
+  "subtitle": "Plataforma Full Stack PWA desplegada en Oracle Cloud con CI/CD, QA y backups automatizados",
+  "type": "Oracle Cloud · CI/CD · QA",
+  "status": "Live en Oracle Cloud (OCI)",
+  "role": "Arquitecto Cloud, DevOps (CI/CD & QA) y Desarrollador Full Stack",
+  "icon": "ServerCog",
+  "accent": "blue",
+  "cover": "/projects/duocore/duocore-architecture.webp",
+  "images": [
+    { "src": "/projects/duocore/duocore-architecture.webp", "label": "Arquitectura Oracle Cloud (OCI) y Seguridad" },
+    { "src": "/projects/duocore/duocore-cicd.webp", "label": "Pipeline CI/CD (GitHub Actions) y QA (Postgres 16)" },
+    { "src": "/projects/duocore/duocore-dashboard.webp", "label": "Dashboard PWA React 19 y Módulos Socket.io" }
+  ],
+  "problem": "Construir y operar en producción 24/7 una plataforma privada con +12 módulos en tiempo real exigía aislar contenedores, automatizar pruebas contra base de datos real, desplegar sin downtime y respaldar datos sin exponer credenciales de larga vida.",
+  "solution": "Instancia ARM Ampere en Oracle Cloud (OCI) con Nginx multi-sitio a nivel de SO, contenedores en loopback (React 19 PWA, Express + Socket.io, PostgreSQL 16 con SQL parametrizado), pipeline CI/CD en GitHub Actions con tests unitarios/integración (Supertest) y backups diarios a Oracle Object Storage vía Pre-Authenticated Request.",
+  "metrics": [
+    ["Oracle OCI", "ARM Ampere · 24/7"],
+    ["CI/CD + QA", "GitHub Actions + PG 16"],
+    ["12+ Módulos", "Socket.io & PWA"],
+    ["14 Días", "backups Object Storage"]
+  ],
+  "stack": [
+    "Oracle Cloud (OCI)",
+    "GitHub Actions (CI/CD)",
+    "Docker Compose",
+    "Nginx Reverse Proxy",
+    "Node.js 22 & Express",
+    "PostgreSQL 16 (SQL puro)",
+    "React 19 PWA",
+    "Socket.io",
+    "Supertest & node:test (QA)"
+  ],
+  "links": [
+    { "label": "Producción (Acceso cerrado)", "href": "https://duocore.duckdns.org", "icon": "Globe" },
+    { "label": "GitHub", "href": "https://github.com/SAVillena/DuoCore", "icon": "Github" }
+  ]
+}

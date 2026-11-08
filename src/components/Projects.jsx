@@ -68,10 +68,10 @@ const spotlightByAccent = {
 };
 
 const projectCategories = [
-    { id: 'all', label: 'Todos los Casos (5)' },
-    { id: 'laravel-infra', label: 'PHP/Laravel & Infraestructura', match: ['proxmox'] },
+    { id: 'all', label: 'Todos los Casos (6)' },
+    { id: 'laravel-infra', label: 'Cloud (Oracle), CI/CD & Infraestructura', match: ['proxmox', 'duocore'] },
     { id: 'gis', label: 'Spring Boot, GIS & Telemetría', match: ['dustsense', 'solidarity-map'] },
-    { id: 'ia-web', label: 'Full Stack Web & Integraciones', match: ['gruas-ams', 'peluqueria'] },
+    { id: 'ia-web', label: 'Full Stack Web & Integraciones', match: ['duocore', 'gruas-ams', 'peluqueria'] },
 ];
 
 /* ─── ImageStage ────────────────────────────────────────────────────────────
