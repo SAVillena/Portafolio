@@ -32,10 +32,10 @@ const audienceModes = {
         titleFramed: 'ERP y Backend',
         titleEnd: ' listos para producción.',
         description:
-            'Especializado en PHP/Laravel, Java (Spring Boot) y React. Construyo módulos contables, facturación electrónica (DTE), integraciones críticas y plataformas geoespaciales.',
+            'Especializado en PHP/Laravel, Java (Spring Boot) y React. Construyo sistemas ERP, facturación electrónica (DTE), despliegues con CI/CD, QA y arquitectura en la nube (Oracle).',
         highlights: [
             'Actual: Full Stack Developer (PHP/Laravel · ERP & DTE) en Pacifik',
-            'Arquitecturas limpias, SQL/PostGIS avanzado y despliegue en Cloud (OCI / Docker)',
+            'Despliegue con CI/CD, QA y Arquitectura en la Nube (Oracle OCI / Docker)',
             'Ingeniero Civil en Informática (UBB) · Certificaciones Oracle ONE & OCI',
         ],
         primaryCta: {
@@ -83,8 +83,8 @@ const audienceModes = {
 const proofPoints = [
     { value: 'ERP & DTE', label: 'Laravel · Contabilidad', accent: 'text-sky-400' },
     { value: 'Full Stack', label: 'React · Spring Boot', accent: 'text-white' },
-    { value: '99.9% Uptime', label: 'Sistemas GIS & Cloud', accent: 'text-emerald-400' },
-    { value: '+200 VMs', label: 'Infraestructura API', accent: 'text-blue-400' },
+    { value: 'Oracle Cloud', label: 'Arquitectura · CI/CD · QA', accent: 'text-emerald-400' },
+    { value: '+200 VMs', label: 'Infraestructura & GIS', accent: 'text-blue-400' },
 ];
 
 const Hero = () => {

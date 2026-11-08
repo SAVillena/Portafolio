@@ -24,9 +24,9 @@ const timeline = [
         highlights: [
             'Desarrollo de módulos sobre ERP en Laravel integrado con bases de datos Lanix.',
             'Módulos de contabilidad, libro mayor, DTE (facturas y boletas) e integración Nubox.',
-            'Flujos de control interno, trazabilidad de datos y mantenimiento evolutivo.',
+            'Flujos de control interno, QA, despliegue continuo (CI/CD) y mantenimiento evolutivo.',
         ],
-        tags: ['PHP 8+', 'Laravel', 'ERP', 'DTE', 'Nubox', 'SQL / Lanix'],
+        tags: ['PHP 8+', 'Laravel', 'ERP', 'DTE', 'Nubox', 'CI/CD', 'QA'],
     },
     {
         date: 'Marzo 2025 – Presente',
@@ -95,10 +95,10 @@ const certifications = [
         badge: 'Especialización',
     },
     {
-        title: 'Certificación Oracle Cloud Infrastructure (OCI)',
-        institution: 'Alura LATAM · Oracle',
+        title: 'Certificación Arquitectura Cloud (OCI): Fundamentos Clave',
+        institution: 'Oracle Cloud Infrastructure · Alura LATAM',
         period: '2026',
-        badge: 'Certificación Cloud',
+        badge: 'Arquitectura Cloud',
     },
 ];
 

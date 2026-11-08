@@ -64,10 +64,10 @@ const quickTopics = [
             'Buscamos automatizar nuestra atención, cotizaciones o flujo de reportes operativos...',
     },
     {
-        label: '🗺️ Sistemas GIS / Cloud',
-        subject: 'Sistemas GIS / Monitoreo / Cloud',
+        label: '☁️ Cloud (Oracle) / CI/CD / GIS',
+        subject: 'Cloud (Oracle) / CI/CD / GIS',
         placeholder:
-            'Necesitamos implementar un mapa interactivo (PostGIS), telemetría o monitoreo de servidores...',
+            'Necesitamos arquitectura cloud (Oracle OCI), automatización de despliegues CI/CD o sistemas GIS (PostGIS)...',
     },
 ];
 

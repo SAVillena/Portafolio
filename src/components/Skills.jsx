@@ -88,17 +88,18 @@ const skillGroups = [
         icon: <Server className="w-6 h-6" />,
         color: 'purple',
         spotlight: 'rgba(168, 85, 247, 0.16)',
-        tag: 'Cloud & Servidores',
-        title: 'Infraestructura & Cloud',
-        subtitle: 'Contenedores, nube y monitoreo de alta disponibilidad.',
+        tag: 'Cloud, CI/CD & QA',
+        title: 'Arquitectura Cloud (Oracle), CI/CD & QA',
+        subtitle: 'Despliegue automatizado, aseguramiento de calidad y nube.',
         skills: [
-            'Oracle Cloud (OCI)',
+            'Arquitectura Cloud (Oracle OCI)',
+            'Despliegue CI/CD',
+            'QA & Testing',
             'Docker & Compose',
             'Proxmox VE API',
             'Linux SysAdmin',
             'Shell Scripting',
             'Nginx Reverse Proxy',
-            'VPS Hetzner',
         ],
     },
     {
@@ -164,7 +165,7 @@ const colorMap = {
 const filterTabs = [
     { id: 'all', label: 'Todo el Stack (6)' },
     { id: 'erp-backend', label: 'ERP, DTE & Backend' },
-    { id: 'fullstack-cloud', label: 'Frontend, SEO & Cloud' },
+    { id: 'fullstack-cloud', label: 'Cloud (Oracle), CI/CD, QA & Web' },
     { id: 'ia-datos', label: 'SQL, PostGIS & IA' },
 ];
 
@@ -203,7 +204,7 @@ const Skills = () => {
                             Habilidades <span className="title-frame">Técnicas</span>
                         </h2>
                         <p className="text-slate-400 text-base font-normal">
-                            Foco en desarrollo Backend (PHP/Laravel, Java Spring Boot), sistemas ERP/DTE, bases de datos y aplicaciones Full Stack.
+                            Foco en Backend (PHP/Laravel, Java Spring Boot), sistemas ERP/DTE, arquitectura en la nube (Oracle), despliegue CI/CD y QA.
                         </p>
                     </div>
 
